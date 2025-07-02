@@ -5,7 +5,9 @@ import (
 	"net/http"
 )
 
-func RegisterRoutes(rg *gin.RouterGroup) {
+func RegisterRoutes(
+	rg *gin.RouterGroup,
+) {
 	test := rg.Group("/test")
 	{
 
@@ -24,7 +26,9 @@ func RegisterRoutes(rg *gin.RouterGroup) {
 	}
 }
 
-func PingPong(c *gin.Context) {
+func PingPong(
+	c *gin.Context,
+) {
 	c.JSON(
 		http.StatusOK,
 		gin.H{
@@ -33,7 +37,9 @@ func PingPong(c *gin.Context) {
 	)
 }
 
-func AskAnswer(c *gin.Context) {
+func AskAnswer(
+	c *gin.Context,
+) {
 	c.JSON(
 		http.StatusOK,
 		gin.H{
