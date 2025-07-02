@@ -1,11 +1,11 @@
 ### GET test/ping
-GET http://localhost:8080/test/ping
+GET http://localhost:8080/api/test/ping
 
 ### GET test/ask
-GET http://localhost:8080/test/ask
+GET http://localhost:8080/api/test/ask
 
 ### GET test2/ping
-GET http://localhost:8080/test2/ping
+GET http://localhost:8080/api/test2/ping
 
 ### GET test2/ask
-GET http://localhost:8080/test2/ask
+GET http://localhost:8080/api/test2/ask
