@@ -1,2 +1,5 @@
 ### GET test/ping
 GET http://localhost:8080/test/ping
+
+### GET test/ask
+GET http://localhost:8080/test/ask
