@@ -1,2 +1,2 @@
-### GET ping
-GET http://localhost:8080/ping
+### GET test/ping
+GET http://localhost:8080/test/ping
