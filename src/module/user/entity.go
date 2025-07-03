@@ -8,10 +8,10 @@ import (
 )
 
 type User struct {
-	ID        uuid.UUID      `gorm:"type:uuid;primaryKey" json:"id"`
-	Name      string         `json:"name"`
-	Email     string         `gorm:"uniqueIndex" json:"email"`
-	Age       uint           `json:"age"`
+	ID        uuid.UUID `gorm:"type:uuid;primaryKey" json:"id"`
+	Name      string    `gorm:"uniqueIndex" json:"name"`
+	Email     string    `gorm:"uniqueIndex" json:"email"`
+	Age       uint      `json:"age"`
 	CreatedAt time.Time
 	UpdatedAt time.Time
 	DeletedAt gorm.DeletedAt `gorm:"index"`
@@ -22,4 +22,3 @@ func (u *User) BeforeCreate(tx *gorm.DB) (err error) {
 	u.ID = uuid.New()
 	return
 }
-
