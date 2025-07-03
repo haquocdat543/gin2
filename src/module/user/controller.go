@@ -46,10 +46,25 @@ func (h *Handler) CreateUser(
 	var dto CreateUserDTO
 
 	// Bind JSON to DTO and validate
-	if err := c.ShouldBindJSON(&dto); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{
-			"error": err.Error(),
-		},
+	if err := c.ShouldBindJSON(
+		&dto,
+	); err != nil {
+		c.JSON(
+			http.StatusBadRequest,
+			gin.H{
+				"error": err.Error(),
+			},
+		)
+		return
+	}
+
+	// Validating
+	if err := dto.Validate(); err != nil {
+		c.JSON(
+			http.StatusBadRequest,
+			gin.H{
+				"errors": err,
+			},
 		)
 		return
 	}
