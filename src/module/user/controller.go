@@ -1,7 +1,6 @@
 package user
 
 import (
-	"errors"
 	"fmt"
 	"gin/src/config"
 	"github.com/gin-gonic/gin"
@@ -50,17 +49,18 @@ func (h *Handler) CreateUser(
 
 	// Bind JSON to DTO and validate
 	if err := c.ShouldBindJSON(&dto); err != nil {
-		// Parse validation errors
-		var ve validator.ValidationErrors
-		if errors.As(err, &ve) {
-			out := make(map[string]string)
+		if ve, ok := err.(validator.ValidationErrors); ok {
+			errorsMap := make(map[string]string, len(ve))
 			for _, fe := range ve {
-				out[fe.Field()] = fmt.Sprintf("failed on '%s' tag", fe.Tag())
+				errorsMap[fe.Field()] = fmt.Sprintf(
+					"Field '%s' failed validation: tag='%s', param='%s'",
+					fe.Field(), fe.Tag(), fe.Param(),
+				)
 			}
-			c.JSON(400, gin.H{"errors": out})
-			return
+			c.JSON(400, gin.H{"errors": errorsMap})
+		} else {
+			c.JSON(400, gin.H{"error": err.Error()})
 		}
-		c.JSON(400, gin.H{"error": err.Error()})
 		return
 	}
 
