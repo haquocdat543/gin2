@@ -1,8 +1,10 @@
 package user
 
 import (
+	"gin/src/config"
 	"github.com/gin-gonic/gin"
 	"net/http"
+	"strings"
 )
 
 type Handler struct {
@@ -59,21 +61,39 @@ func (h *Handler) CreateUser(
 		Age:   uint(dto.Age), // safe conversion
 	}
 
-	if err := h.service.CreateUser(
-		&user,
-	); err != nil {
-		c.JSON(
-			http.StatusInternalServerError,
-			gin.H{
-				"error": err.Error(),
-			},
-		)
+	err := h.service.CreateUser(&user)
+	if err != nil {
+		if strings.Contains(
+			err.Error(),
+			"ERROR: duplicate key value violates unique constraint \"idx_users_email\" (SQLSTATE 23505)",
+		) ||
+			strings.Contains(
+				err.Error(),
+				"UNIQUE constraint failed",
+			) {
+			c.JSON(
+				http.StatusBadRequest,
+				gin.H{
+					"error": config.ErrEmailAlreadyExists,
+				},
+			)
+		} else {
+			c.JSON(
+				http.StatusInternalServerError,
+				gin.H{
+					"error": config.ErrInternalServer,
+				},
+			)
+		}
 		return
 	}
 
 	c.JSON(
 		http.StatusCreated,
-		user,
+		gin.H{
+			"message": config.MsgUserCreated,
+			"user":    user,
+		},
 	)
 }
 
