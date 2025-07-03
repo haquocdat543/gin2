@@ -1,7 +1,11 @@
 package test
 
+import (
+	"gorm.io/gorm"
+)
+
 type Test struct {
-	ID    uint   `json:"id" gorm:"primaryKey"`
+	gorm.Model
 	Name  string `json:"name"`
 	Email string `json:"email"`
 }
