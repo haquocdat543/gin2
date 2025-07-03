@@ -1,17 +1,21 @@
 package router
 
 import (
-	test "gin/src/module/test"
+	"gorm.io/gorm"
+	"gin/src/module/test"
 	"github.com/gin-gonic/gin"
 )
 
-func SetupRouter() *gin.Engine {
+func SetupRouter(db *gorm.DB) *gin.Engine {
 	r := gin.Default()
 
 	api := r.Group("/api")
-	{
-		test.RegisterRoutes(api)
-	}
+
+	// ✅ Initialize service and handler properly
+	testRepo := test.NewRepository(db)
+	testService := test.NewService(testRepo)
+	testHandler := test.NewHandler(testService)
+	testHandler.RegisterRoutes(api)
 
 	return r
 }

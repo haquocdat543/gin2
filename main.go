@@ -15,6 +15,6 @@ func main() {
 		panic("Migration failed: " + err.Error())
 	}
 
-	r := router.SetupRouter()
+	r := router.SetupRouter(dbConn)
 	r.Run(":8080")
 }

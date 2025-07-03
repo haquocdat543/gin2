@@ -5,45 +5,93 @@ import (
 	"net/http"
 )
 
-func RegisterRoutes(
+type Handler struct {
+	service Service
+}
+
+func NewHandler(
+	s Service,
+) *Handler {
+	return &Handler{
+		service: s,
+	}
+}
+
+func (h *Handler) RegisterRoutes(
 	rg *gin.RouterGroup,
 ) {
-	test := rg.Group("/test")
+	userGroup := rg.Group("/test")
 	{
 
-		test.Handle(
-			"GET",
-			"/ping",
-			PingPong,
+		userGroup.Handle(
+			"POST",
+			"/",
+			h.CreateUser,
 		)
 
-		test.Handle(
+		userGroup.Handle(
 			"GET",
-			"/ask",
-			AskAnswer,
+			"/",
+			h.GetUsers,
 		)
 
 	}
 }
 
-func PingPong(
+func (h *Handler) CreateUser(
 	c *gin.Context,
 ) {
+
+	var user Test
+
+	if err := c.ShouldBindJSON(
+		&user,
+	); err != nil {
+		c.JSON(
+			http.StatusBadRequest,
+			gin.H{
+				"error": err.Error(),
+			},
+		)
+		return
+	}
+
+	if err := h.service.CreateUser(
+		&user,
+	); err != nil {
+		c.JSON(
+			http.StatusInternalServerError,
+			gin.H{
+				"error": err.Error(),
+			},
+		)
+		return
+	}
+
 	c.JSON(
-		http.StatusOK,
-		gin.H{
-			"message": "pong",
-		},
+		http.StatusCreated,
+		user,
 	)
 }
 
-func AskAnswer(
+func (h *Handler) GetUsers(
 	c *gin.Context,
 ) {
+
+	users, err := h.service.GetAllUsers()
+
+	if err != nil {
+		c.JSON(
+			http.StatusInternalServerError,
+			gin.H{
+				"error": err.Error(),
+			},
+		)
+		return
+	}
 	c.JSON(
 		http.StatusOK,
-		gin.H{
-			"message": "answer",
-		},
+		users,
 	)
 }
+
