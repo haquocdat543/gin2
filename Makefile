@@ -15,3 +15,15 @@ ginkgo-b:
 	ginkgo bootstrap
 ginkgo-w:
 	ginkgo watch
+
+# Migration
+m-gen:
+	migrate create -ext sql -dir src/db/migration -seq create_users_table
+mv:
+	migrate -path src/db/migration -database "postgres://develop:effimatebackend@localhost:5432/postgres?sslmode=disable" version
+mf:
+	migrate -path src/db/migration -database "postgres://develop:effimatebackend@localhost:5432/postgres?sslmode=disable" force 1
+mup:
+	migrate -path src/db/migration -database "postgres://develop:effimatebackend@localhost:5432/postgres?sslmode=disable" up 1
+mdown:
+	migrate -path src/db/migration -database "postgres://develop:effimatebackend@localhost:5432/postgres?sslmode=disable" down 1
