@@ -1,12 +1,12 @@
-package test
+package user
 
 type Service interface {
 	CreateUser(
-		user *Test,
+		user *User,
 	) error
 
 	GetAllUsers() (
-		[]Test,
+		[]User,
 		error,
 	)
 }
@@ -24,7 +24,7 @@ func NewService(
 }
 
 func (s *service) CreateUser(
-	user *Test,
+	user *User,
 ) error {
 	return s.repo.Create(
 		user,
@@ -32,7 +32,7 @@ func (s *service) CreateUser(
 }
 
 func (s *service) GetAllUsers() (
-	[]Test,
+	[]User,
 	error,
 ) {
 	return s.repo.FindAll()

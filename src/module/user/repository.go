@@ -1,14 +1,14 @@
-package test
+package user
 
 import "gorm.io/gorm"
 
 type Repository interface {
 	Create(
-		user *Test,
+		user *User,
 	) error
 
 	FindAll() (
-		[]Test,
+		[]User,
 		error,
 	)
 }
@@ -26,7 +26,7 @@ func NewRepository(
 }
 
 func (r *repository) Create(
-	user *Test,
+	user *User,
 ) error {
 	return r.db.Create(
 		user,
@@ -34,10 +34,10 @@ func (r *repository) Create(
 }
 
 func (r *repository) FindAll() (
-	[]Test,
+	[]User,
 	error,
 ) {
-	var users []Test
+	var users []User
 	err := r.db.Find(
 		&users,
 	).Error

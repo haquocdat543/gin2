@@ -1,10 +1,10 @@
-package test
+package user
 
 import (
 	"gorm.io/gorm"
 )
 
-type Test struct {
+type User struct {
 	gorm.Model
 	Name  string `json:"name"`
 	Email string `json:"email"`

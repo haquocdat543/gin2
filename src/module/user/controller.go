@@ -1,4 +1,4 @@
-package test
+package user
 
 import (
 	"github.com/gin-gonic/gin"
@@ -20,7 +20,7 @@ func NewHandler(
 func (h *Handler) RegisterRoutes(
 	rg *gin.RouterGroup,
 ) {
-	userGroup := rg.Group("/test")
+	userGroup := rg.Group("/user")
 	{
 
 		userGroup.Handle(
@@ -42,7 +42,7 @@ func (h *Handler) CreateUser(
 	c *gin.Context,
 ) {
 
-	var user Test
+	var user User
 
 	if err := c.ShouldBindJSON(
 		&user,

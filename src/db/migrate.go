@@ -1,13 +1,13 @@
 package db
 
 import (
-	"gin/src/module/test"
+	"gin/src/module/user"
 	"gorm.io/gorm"
 )
 
 func Migrate(db *gorm.DB) error {
 	return db.AutoMigrate(
-		&test.Test{},
+		&user.User{},
 		// Add more models here as your app grows
 	)
 }
