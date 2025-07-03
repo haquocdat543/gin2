@@ -41,19 +41,22 @@ func (h *Handler) RegisterRoutes(
 func (h *Handler) CreateUser(
 	c *gin.Context,
 ) {
+	var dto CreateUserDTO
 
-	var user User
-
-	if err := c.ShouldBindJSON(
-		&user,
-	); err != nil {
-		c.JSON(
-			http.StatusBadRequest,
-			gin.H{
-				"error": err.Error(),
-			},
+	// Bind JSON to DTO and validate
+	if err := c.ShouldBindJSON(&dto); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": err.Error(),
+		},
 		)
 		return
+	}
+
+	// Manually map DTO to Entity
+	user := User{
+		Name:  dto.Name,
+		Email: dto.Email,
+		Age:   uint(dto.Age), // safe conversion
 	}
 
 	if err := h.service.CreateUser(
@@ -94,4 +97,3 @@ func (h *Handler) GetUsers(
 		users,
 	)
 }
-
