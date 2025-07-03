@@ -1,0 +1,11 @@
+### GET api/user
+GET http://localhost:8080/api/user
+
+### POST api/user
+POST http://localhost:8080/api/user
+
+{
+	"name": "haquocdat",
+	"email": "wwwdatha543@gmail.com",
+	"age": 20
+}
