@@ -1,8 +1,11 @@
 package user
 
 import (
+	"errors"
+	"fmt"
 	"gin/src/config"
 	"github.com/gin-gonic/gin"
+	"github.com/go-playground/validator/v10"
 	"net/http"
 	"strings"
 )
@@ -47,10 +50,17 @@ func (h *Handler) CreateUser(
 
 	// Bind JSON to DTO and validate
 	if err := c.ShouldBindJSON(&dto); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{
-			"error": err.Error(),
-		},
-		)
+		// Parse validation errors
+		var ve validator.ValidationErrors
+		if errors.As(err, &ve) {
+			out := make(map[string]string)
+			for _, fe := range ve {
+				out[fe.Field()] = fmt.Sprintf("failed on '%s' tag", fe.Tag())
+			}
+			c.JSON(400, gin.H{"errors": out})
+			return
+		}
+		c.JSON(400, gin.H{"error": err.Error()})
 		return
 	}
 
