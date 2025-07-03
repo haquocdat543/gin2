@@ -11,7 +11,6 @@ func SetupRouter(db *gorm.DB) *gin.Engine {
 
 	api := r.Group("/api")
 
-	// ✅ Initialize service and handler properly
 	testRepo := user.NewRepository(db)
 	testService := user.NewService(testRepo)
 	testHandler := user.NewHandler(testService)
