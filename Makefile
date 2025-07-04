@@ -27,3 +27,7 @@ mup:
 	migrate -path src/db/migration -database "postgres://develop:effimatebackend@localhost:5432/postgres?sslmode=disable" up 1
 mdown:
 	migrate -path src/db/migration -database "postgres://develop:effimatebackend@localhost:5432/postgres?sslmode=disable" down 1
+
+# Seeding
+seed-start:
+	go run main.go seed start
