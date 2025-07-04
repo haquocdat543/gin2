@@ -11,4 +11,19 @@ var Seed = []*User{
 		Email: "xiaoqinhua@gmail.com",
 		Age:   19,
 	},
+	{
+		Name:  "lalala",
+		Email: "lalala@gmail.com",
+		Age:   21,
+	},
+	{
+		Name:  "lihanjiaqie",
+		Email: "lihanjiaqie@gmail.com",
+		Age:   23,
+	},
+	{
+		Name:  "dengdengdengwo",
+		Email: "dengdengdengwo@gmail.com",
+		Age:   24,
+	},
 }
