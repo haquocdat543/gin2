@@ -46,6 +46,14 @@ func (h *Handler) RegisterRoutes(
 			h.GetUsers,
 		)
 
+		userGroup.Handle(
+			"POST",
+			"/login",
+			share.LogRequest(logger),
+			share.RateLimitMiddleware(share.GlobalRatelimit),
+			h.Login,
+		)
+
 	}
 }
 
@@ -134,4 +142,45 @@ func (h *Handler) GetUsers(
 		http.StatusOK,
 		users,
 	)
+}
+
+func (h *Handler) Login(
+	c *gin.Context,
+) {
+	var dto LoginDTO
+
+	// Bind JSON to DTO and validate
+	if err := c.ShouldBindJSON(&dto); err != nil {
+		if ve, ok := err.(validator.ValidationErrors); ok {
+			errorsMap := make(map[string]string, len(ve))
+			for _, fe := range ve {
+				errorsMap[fe.Field()] = fmt.Sprintf(
+					"Field '%s' failed validation: tag='%s', param='%s'",
+					fe.Field(), fe.Tag(), fe.Param(),
+				)
+			}
+			c.JSON(400, gin.H{"errors": errorsMap})
+		} else {
+			c.JSON(400, gin.H{"error": err.Error()})
+		}
+		return
+	}
+
+	err := h.service.Login(dto.Name, dto.Password)
+	if err != nil {
+		c.JSON(
+			400,
+			gin.H{
+				"error": err.Error(),
+			},
+		)
+	} else {
+		c.JSON(
+			http.StatusCreated,
+			gin.H{
+				"message": config.MsgLoginSuccess,
+			},
+		)
+	}
+
 }

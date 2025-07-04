@@ -6,6 +6,7 @@ const (
 	// Success messages
 	MsgUserCreated = "User created successfully"
 	MsgUserFetched = "Users fetched successfully"
+	MsgLoginSuccess = "login successfully"
 
 	// Error messages
 	ErrEmailAlreadyExists = "Email already exists"

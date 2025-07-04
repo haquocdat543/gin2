@@ -11,6 +11,11 @@ type Repository interface {
 		[]User,
 		error,
 	)
+
+	GetUserPassword(name string) (
+		string,
+		error,
+	)
 }
 
 type repository struct {
@@ -42,4 +47,13 @@ func (r *repository) FindAll() (
 		&users,
 	).Error
 	return users, err
+}
+
+func (r *repository) GetUserPassword(name string) (string, error) {
+	var user User
+	err := r.db.First(&user, "name = ?", name).Error
+	if err != nil {
+		return "", err
+	}
+	return user.Password, nil
 }

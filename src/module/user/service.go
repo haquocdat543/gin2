@@ -1,5 +1,10 @@
 package user
 
+import (
+	"fmt"
+	"golang.org/x/crypto/bcrypt"
+)
+
 type Service interface {
 	CreateUser(
 		user *User,
@@ -9,6 +14,11 @@ type Service interface {
 		[]User,
 		error,
 	)
+
+	Login(
+		name string,
+		passwors string,
+	) error
 }
 
 type service struct {
@@ -36,4 +46,23 @@ func (s *service) GetAllUsers() (
 	error,
 ) {
 	return s.repo.FindAll()
+}
+
+func (s *service) Login(
+	name string,
+	plainPassword string,
+) error {
+	hashedPassword, err := s.repo.GetUserPassword(name)
+	if err != nil {
+		// Could be user not found
+		return fmt.Errorf("authentication failed: %w", err)
+	}
+
+	err = bcrypt.CompareHashAndPassword([]byte(hashedPassword), []byte(plainPassword))
+	if err != nil {
+		// Don't leak if it's a bad password or a hash mismatch
+		return fmt.Errorf("invalid credentials")
+	}
+
+	return nil // login success
 }
