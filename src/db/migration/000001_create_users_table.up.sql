@@ -1,4 +1,4 @@
-CREATE TABLE "users" (
+CREATE TABLE "user" (
     id UUID PRIMARY KEY,
     name TEXT UNIQUE NOT NULL,
     email TEXT UNIQUE NOT NULL,
@@ -8,5 +8,5 @@ CREATE TABLE "users" (
     deleted_at TIMESTAMPTZ
 );
 
-CREATE INDEX users_deleted_at_idx ON "users" (deleted_at);
+CREATE INDEX users_deleted_at_idx ON "user" (deleted_at);
 

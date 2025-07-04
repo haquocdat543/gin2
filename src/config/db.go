@@ -3,6 +3,7 @@ package config
 import (
 	"fmt"
 	"gorm.io/driver/postgres"
+	"gorm.io/gorm/schema"
 	"gorm.io/gorm"
 )
 
@@ -14,7 +15,11 @@ func InitDB() *gorm.DB {
 
 	db, err := gorm.Open(
 		postgres.Open(dsn),
-		&gorm.Config{},
+		&gorm.Config{
+			NamingStrategy: schema.NamingStrategy{
+				SingularTable: true,
+			},
+		},
 	)
 	if err != nil {
 		panic("Failed to connect to database: " + err.Error())
@@ -22,4 +27,3 @@ func InitDB() *gorm.DB {
 
 	return db
 }
-
