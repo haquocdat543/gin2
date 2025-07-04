@@ -174,10 +174,23 @@ func (h *Handler) Login(
 			},
 		)
 	} else {
+
+		token, err := share.GenerateToken(dto.Name)
+		if err != nil {
+			c.JSON(
+				http.StatusInternalServerError,
+				gin.H{
+					"error": "Could not generate token",
+				},
+			)
+			return
+		}
+
 		c.JSON(
 			http.StatusCreated,
 			gin.H{
 				"message": MsgLoginSuccess,
+				"jwt":     token,
 			},
 		)
 	}
