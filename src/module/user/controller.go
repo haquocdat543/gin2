@@ -33,24 +33,16 @@ func (h *Handler) RegisterRoutes(
 		userGroup.Handle(
 			"POST",
 			"/",
-			share.LogRequest(
-				logger,
-			),
-			share.RateLimitMiddleware(
-				share.GlobalRatelimit,
-			),
+			share.LogRequest(logger),
+			share.RateLimitMiddleware(share.GlobalRatelimit),
 			h.CreateUser,
 		)
 
 		userGroup.Handle(
 			"GET",
 			"/",
-			share.LogRequest(
-				logger,
-			),
-			share.RateLimitMiddleware(
-				share.GlobalRatelimit,
-			),
+			share.LogRequest(logger),
+			share.RateLimitMiddleware(share.GlobalRatelimit),
 			h.GetUsers,
 		)
 
@@ -81,10 +73,10 @@ func (h *Handler) CreateUser(
 
 	// Manually map DTO to Entity
 	user := User{
-		Name:  dto.Name,
-		Email: dto.Email,
+		Name:     dto.Name,
+		Email:    dto.Email,
 		Password: dto.Password,
-		Age:   uint(dto.Age), // safe conversion
+		Age:      uint(dto.Age), // safe conversion
 	}
 
 	err := h.service.CreateUser(&user)
