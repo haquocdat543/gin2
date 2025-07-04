@@ -8,9 +8,14 @@ import (
 )
 
 func InitDB() *gorm.DB {
+
 	dsn := fmt.Sprintf(
 		"host=%s port=%s user=%s password=%s dbname=%s sslmode=disable",
-		ENV.DBHost, ENV.DBPort, ENV.DBUser, ENV.DBPassword, ENV.DBName,
+		ENV.DBHost,
+		ENV.DBPort,
+		ENV.DBUser,
+		ENV.DBPassword,
+		ENV.DBName,
 	)
 
 	db, err := gorm.Open(
