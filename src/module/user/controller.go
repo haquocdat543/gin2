@@ -6,6 +6,7 @@ import (
 	"gin/src/share"
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator/v10"
+	"go.uber.org/zap"
 	"net/http"
 	"strings"
 )
@@ -24,6 +25,7 @@ func NewHandler(
 
 func (h *Handler) RegisterRoutes(
 	rg *gin.RouterGroup,
+	logger *zap.Logger,
 ) {
 	userGroup := rg.Group("/user")
 	{
@@ -31,14 +33,24 @@ func (h *Handler) RegisterRoutes(
 		userGroup.Handle(
 			"POST",
 			"/",
-			share.RateLimitMiddleware(share.GlobalRatelimit),
+			share.LogRequest(
+				logger,
+			),
+			share.RateLimitMiddleware(
+				share.GlobalRatelimit,
+			),
 			h.CreateUser,
 		)
 
 		userGroup.Handle(
 			"GET",
 			"/",
-			share.RateLimitMiddleware(share.GlobalRatelimit),
+			share.LogRequest(
+				logger,
+			),
+			share.RateLimitMiddleware(
+				share.GlobalRatelimit,
+			),
 			h.GetUsers,
 		)
 

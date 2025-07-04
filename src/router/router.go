@@ -1,12 +1,16 @@
 package router
 
 import (
-	"gorm.io/gorm"
 	"gin/src/module/user"
 	"github.com/gin-gonic/gin"
+	"gorm.io/gorm"
+	"go.uber.org/zap"
 )
 
-func SetupRouter(db *gorm.DB) *gin.Engine {
+func SetupRouter(
+	db *gorm.DB,
+	logger *zap.Logger,
+) *gin.Engine {
 	r := gin.Default()
 
 	api := r.Group("/api")
@@ -14,7 +18,7 @@ func SetupRouter(db *gorm.DB) *gin.Engine {
 	testRepo := user.NewRepository(db)
 	testService := user.NewService(testRepo)
 	testHandler := user.NewHandler(testService)
-	testHandler.RegisterRoutes(api)
+	testHandler.RegisterRoutes(api, logger)
 
 	return r
 }
