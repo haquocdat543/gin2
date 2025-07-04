@@ -22,6 +22,11 @@ func main() {
 		panic("Migration failed: " + err.Error())
 	}
 
+	// Seeding
+	if err := db.Seed(dbConn); err != nil {
+		panic("Seeding failed: " + err.Error())
+	}
+
 	// Router
 	r := router.SetupRouter(
 		dbConn,
