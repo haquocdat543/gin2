@@ -11,7 +11,7 @@ func main() {
 	// Logging
 	logger := config.InitLog()
 
-	config.LoadEnv()
+	config.InitEnv()
 	dbConn := config.InitDB()
 
 	if err := db.Migrate(dbConn); err != nil {

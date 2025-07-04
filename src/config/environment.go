@@ -16,7 +16,7 @@ type EnvConfig struct {
 
 var ENV EnvConfig
 
-func LoadEnv() {
+func InitEnv() {
 
 	err := godotenv.Load()
 	if err != nil {
