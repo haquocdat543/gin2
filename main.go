@@ -1,6 +1,7 @@
 package main
 
 import (
+	"gin/src/cli"
 	"gin/src/config"
 	"gin/src/db"
 	"gin/src/router"
@@ -22,10 +23,8 @@ func main() {
 		panic("Migration failed: " + err.Error())
 	}
 
-	// Seeding
-	if err := db.Seed(dbConn); err != nil {
-		panic("Seeding failed: " + err.Error())
-	}
+	// CLI
+	cli.ExucuteCLI()
 
 	// Router
 	r := router.SetupRouter(
