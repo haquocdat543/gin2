@@ -2,7 +2,6 @@ package user
 
 import (
 	"fmt"
-	"gin/src/config"
 	"gin/src/share"
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator/v10"
@@ -100,14 +99,14 @@ func (h *Handler) CreateUser(
 			c.JSON(
 				http.StatusBadRequest,
 				gin.H{
-					"error": config.ErrEmailAlreadyExists,
+					"error": ErrEmailAlreadyExists,
 				},
 			)
 		} else {
 			c.JSON(
 				http.StatusInternalServerError,
 				gin.H{
-					"error": config.ErrInternalServer,
+					"error": ErrInternalServer,
 				},
 			)
 		}
@@ -117,7 +116,7 @@ func (h *Handler) CreateUser(
 	c.JSON(
 		http.StatusCreated,
 		gin.H{
-			"message": config.MsgUserCreated,
+			"message": MsgUserCreated,
 			"user":    user,
 		},
 	)
@@ -178,7 +177,7 @@ func (h *Handler) Login(
 		c.JSON(
 			http.StatusCreated,
 			gin.H{
-				"message": config.MsgLoginSuccess,
+				"message": MsgLoginSuccess,
 			},
 		)
 	}

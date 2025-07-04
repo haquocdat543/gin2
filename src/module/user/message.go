@@ -1,12 +1,15 @@
-package config
+package user
 
 const (
 
-	// API USER
 	// Success messages
 	MsgUserCreated = "User created successfully"
 	MsgUserFetched = "Users fetched successfully"
 	MsgLoginSuccess = "login successfully"
+
+)
+
+const (
 
 	// Error messages
 	ErrEmailAlreadyExists = "Email already exists"
