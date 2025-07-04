@@ -13,7 +13,7 @@ import (
 // Define a GlobalRatelimit limit of 5 requests per minute for the specific API.
 var GlobalRatelimit = limiter.Rate{
 	Period: 20 * time.Second,
-	Limit:  5,
+	Limit:  20,
 }
 
 // RateLimitMiddleware creates a rate-limiting middleware for a specific rate.
