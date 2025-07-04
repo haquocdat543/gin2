@@ -3,6 +3,7 @@ package user
 import (
 	"fmt"
 	"gin/src/config"
+	"gin/src/share"
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator/v10"
 	"net/http"
@@ -30,12 +31,14 @@ func (h *Handler) RegisterRoutes(
 		userGroup.Handle(
 			"POST",
 			"/",
+			share.RateLimitMiddleware(share.GlobalRatelimit),
 			h.CreateUser,
 		)
 
 		userGroup.Handle(
 			"GET",
 			"/",
+			share.RateLimitMiddleware(share.GlobalRatelimit),
 			h.GetUsers,
 		)
 
