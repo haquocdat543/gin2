@@ -25,7 +25,7 @@ func (u *User) BeforeCreate(tx *gorm.DB) (err error) {
 
 	hashedBytes, err := bcrypt.GenerateFromPassword(
 		[]byte(
-			u.ID.String(),
+			u.Password,
 		),
 		bcrypt.DefaultCost,
 	)
