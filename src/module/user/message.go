@@ -3,10 +3,9 @@ package user
 const (
 
 	// Success messages
-	MsgUserCreated = "User created successfully"
-	MsgUserFetched = "Users fetched successfully"
+	MsgUserCreated  = "User created successfully"
+	MsgUserFetched  = "Users fetched successfully"
 	MsgLoginSuccess = "login successfully"
-
 )
 
 const (
@@ -16,5 +15,5 @@ const (
 	ErrInvalidRequest     = "Invalid request payload"
 	ErrInternalServer     = "Internal server error"
 
+	ErrInvalidPassword    = "Invalid password"
 )
-

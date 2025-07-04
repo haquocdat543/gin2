@@ -61,7 +61,7 @@ func (s *service) Login(
 	err = bcrypt.CompareHashAndPassword([]byte(hashedPassword), []byte(plainPassword))
 	if err != nil {
 		// Don't leak if it's a bad password or a hash mismatch
-		return fmt.Errorf("invalid credentials")
+		return fmt.Errorf(ErrInvalidPassword)
 	}
 
 	return nil // login success
