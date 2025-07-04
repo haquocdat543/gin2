@@ -8,16 +8,25 @@ import (
 
 func main() {
 
+	// Env
+	config.InitEnv()
+
 	// Logging
 	logger := config.InitLog()
 
-	config.InitEnv()
+	// Database
 	dbConn := config.InitDB()
 
+	// Migration
 	if err := db.Migrate(dbConn); err != nil {
 		panic("Migration failed: " + err.Error())
 	}
 
-	r := router.SetupRouter(dbConn, logger)
+	// Router
+	r := router.SetupRouter(
+		dbConn,
+		logger,
+	)
 	r.Run(":8080")
+
 }
