@@ -1,8 +1,8 @@
 package user
 
 import (
-	"gin/src/share"
 	"gin/src/config"
+	"gin/src/share"
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
 	"net/http"
@@ -37,6 +37,15 @@ func (h *Handler) RegisterRoutes(
 		)
 
 		userGroup.Handle(
+			"GET",
+			"/:name",
+			share.LogRequest(logger),
+			share.RateLimitMiddleware(config.GlobalRatelimit),
+			share.AuthMiddleware(),
+			h.Find,
+		)
+
+		userGroup.Handle(
 			"DELETE",
 			"/",
 			share.LogRequest(logger),
@@ -46,7 +55,7 @@ func (h *Handler) RegisterRoutes(
 
 		userGroup.Handle(
 			"GET",
-			"/",
+			"/all",
 			share.LogRequest(logger),
 			share.RateLimitMiddleware(config.GlobalRatelimit),
 			h.GetUsers,
@@ -93,7 +102,7 @@ func (h *Handler) CreateUser(
 ) {
 	var dto CreateUserDTO
 
-	if !share.BindAndValidate(c, &dto) {
+	if !share.BindJSONAndValidate(c, &dto) {
 		return // the function already handled the error response
 	}
 
@@ -142,6 +151,35 @@ func (h *Handler) CreateUser(
 	)
 }
 
+func (h *Handler) Find(
+	c *gin.Context,
+) {
+	var dto GetUserInfoDTO
+
+	if !share.BindUriAndValidate(c, &dto) {
+		return // the function already handled the error response
+	}
+
+	user, err := h.service.Find(dto.Name)
+	if err != nil {
+		c.JSON(
+			http.StatusBadRequest,
+			gin.H{
+				"error": err.Error(),
+			},
+		)
+	}
+
+	// Data return
+	c.JSON(
+		http.StatusOK,
+		gin.H{
+			"message": MsgUserInfoFetched,
+			"user":    user,
+		},
+	)
+}
+
 func (h *Handler) GetUsers(
 	c *gin.Context,
 ) {
@@ -171,7 +209,7 @@ func (h *Handler) Login(
 	var dto LoginDTO
 
 	// Bind JSON to DTO and validate
-	if !share.BindAndValidate(c, &dto) {
+	if !share.BindJSONAndValidate(c, &dto) {
 		return // the function already handled the error response
 	}
 
@@ -215,7 +253,7 @@ func (h *Handler) UpdatePassword(
 	var dto UpdatePasswordDTO
 
 	// Bind JSON to DTO and validate
-	if !share.BindAndValidate(c, &dto) {
+	if !share.BindJSONAndValidate(c, &dto) {
 		return // the function already handled the error response
 	}
 
@@ -270,7 +308,7 @@ func (h *Handler) DeleteUser(
 	var dto DeleteUserDTO
 
 	// Bind JSON to DTO and validate
-	if !share.BindAndValidate(c, &dto) {
+	if !share.BindJSONAndValidate(c, &dto) {
 		return // the function already handled the error response
 	}
 
@@ -312,7 +350,7 @@ func (h *Handler) PatchUpdateUser(
 	var dto PatchUserDTO
 
 	// Bind JSON to DTO and validate
-	if !share.BindAndValidate(c, &dto) {
+	if !share.BindJSONAndValidate(c, &dto) {
 		return // the function already handled the error response
 	}
 
@@ -358,7 +396,7 @@ func (h *Handler) PutUpdateUser(
 	var dto PutUserDTO
 
 	// Bind JSON to DTO and validate
-	if !share.BindAndValidate(c, &dto) {
+	if !share.BindJSONAndValidate(c, &dto) {
 		return // the function already handled the error response
 	}
 

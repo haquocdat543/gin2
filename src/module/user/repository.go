@@ -1,11 +1,15 @@
 package user
 
-import "gorm.io/gorm"
+import (
+	"gorm.io/gorm"
+)
 
 type Repository interface {
 	Create(
 		user *User,
 	) error
+
+	Find(name string) (User, error)
 
 	FindAll() (
 		[]User,
@@ -44,6 +48,19 @@ func (r *repository) Create(
 	return r.db.Create(
 		user,
 	).Error
+}
+
+func (r *repository) Find(name string) (User, error) {
+	var user User
+
+	fields := []string{
+		"email",
+		"role",
+		"address",
+	}
+
+	err := r.db.Select(fields).Where("name = ?", name).Find(&user).Error
+	return user, err
 }
 
 func (r *repository) FindAll() (

@@ -11,6 +11,8 @@ type Service interface {
 		user *User,
 	) error
 
+	Find(name string) (User,error)
+
 	GetAllUsers() (
 		[]User,
 		error,
@@ -55,6 +57,10 @@ func (s *service) CreateUser(
 	return s.repo.Create(
 		user,
 	)
+}
+
+func (s *service) Find(name string) (User, error) {
+	return s.repo.Find(name)
 }
 
 func (s *service) GetAllUsers() (

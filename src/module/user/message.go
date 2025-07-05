@@ -5,6 +5,7 @@ const (
 	// Success messages
 	MsgUserCreated       = "User created successfully"
 	MsgUserFetched       = "Users fetched successfully"
+	MsgUserInfoFetched   = "User info fetched successfully"
 	MsgLoginSuccess      = "login successfully"
 	MsgDeleteSuccess     = "delete user successfully"
 	MsgUpdateUserSuccess = "update user successfully"
