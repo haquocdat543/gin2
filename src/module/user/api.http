@@ -1,8 +1,12 @@
+@SCHEME = http
+@HOST = localhost
+@PORT = 8080
+
 ### GET api/user/all
-GET http://localhost:8080/api/user/all
+GET {{SCHEME}}://{{HOST}}:{{PORT}}/api/user/all
 
 ### POST api/user
-POST http://localhost:8080/api/user
+POST {{SCHEME}}://{{HOST}}:{{PORT}}/api/user
 
 {
 	"name": "haquocdat",
@@ -11,12 +15,12 @@ POST http://localhost:8080/api/user
 }
 
 ### GET api/user
-GET http://localhost:8080/api/user
+GET {{SCHEME}}://{{HOST}}:{{PORT}}/api/user
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NTE4MDYzNTAsImlhdCI6MTc1MTcxOTk1MCwiaXAiOiI6OjEiLCJ1c2VybmFtZSI6ImhhcXVvY2RhdCJ9.NyPXsJajJuG9_2KORadJRb_oJNI8OLjI1nQXxTXOWnU
 
 ### DELETE api/user
-DELETE http://localhost:8080/api/user
+DELETE {{SCHEME}}://{{HOST}}:{{PORT}}/api/user
 
 {
 	"name": "haquocdat",
@@ -24,7 +28,7 @@ DELETE http://localhost:8080/api/user
 }
 
 ### POST api/user/login
-POST http://localhost:8080/api/user/login
+POST {{SCHEME}}://{{HOST}}:{{PORT}}/api/user/login
 
 {
 	"name": "haquocdat",
@@ -32,7 +36,7 @@ POST http://localhost:8080/api/user/login
 }
 
 ### POST api/user/password
-PATCH http://localhost:8080/api/user/password
+PATCH {{SCHEME}}://{{HOST}}:{{PORT}}/api/user/password
 
 {
 	"name": "haquocdat",
@@ -41,7 +45,7 @@ PATCH http://localhost:8080/api/user/password
 }
 
 ### POST api/user
-PATCH http://localhost:8080/api/user
+PATCH {{SCHEME}}://{{HOST}}:{{PORT}}/api/user
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NTE4MDYzNTAsImlhdCI6MTc1MTcxOTk1MCwiaXAiOiI6OjEiLCJ1c2VybmFtZSI6ImhhcXVvY2RhdCJ9.NyPXsJajJuG9_2KORadJRb_oJNI8OLjI1nQXxTXOWnU
 
@@ -51,7 +55,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NTE4MDYzN
 }
 
 ### POST api/user
-PUT http://localhost:8080/api/user
+PUT {{SCHEME}}://{{HOST}}:{{PORT}}/api/user
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NTE4MDYzNTAsImlhdCI6MTc1MTcxOTk1MCwiaXAiOiI6OjEiLCJ1c2VybmFtZSI6ImhhcXVvY2RhdCJ9.NyPXsJajJuG9_2KORadJRb_oJNI8OLjI1nQXxTXOWnU
 
