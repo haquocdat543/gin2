@@ -1,10 +1,8 @@
 package user
 
 import (
-	"fmt"
 	"gin/src/share"
 	"github.com/gin-gonic/gin"
-	"github.com/go-playground/validator/v10"
 	"go.uber.org/zap"
 	"net/http"
 	"strings"
@@ -61,21 +59,8 @@ func (h *Handler) CreateUser(
 ) {
 	var dto CreateUserDTO
 
-	// Bind JSON to DTO and validate
-	if err := c.ShouldBindJSON(&dto); err != nil {
-		if ve, ok := err.(validator.ValidationErrors); ok {
-			errorsMap := make(map[string]string, len(ve))
-			for _, fe := range ve {
-				errorsMap[fe.Field()] = fmt.Sprintf(
-					"Field '%s' failed validation: tag='%s', param='%s'",
-					fe.Field(), fe.Tag(), fe.Param(),
-				)
-			}
-			c.JSON(400, gin.H{"errors": errorsMap})
-		} else {
-			c.JSON(400, gin.H{"error": err.Error()})
-		}
-		return
+	if !share.BindAndValidate(c, &dto) {
+		return // the function already handled the error response
 	}
 
 	// Manually map DTO to Entity
@@ -149,20 +134,8 @@ func (h *Handler) Login(
 	var dto LoginDTO
 
 	// Bind JSON to DTO and validate
-	if err := c.ShouldBindJSON(&dto); err != nil {
-		if ve, ok := err.(validator.ValidationErrors); ok {
-			errorsMap := make(map[string]string, len(ve))
-			for _, fe := range ve {
-				errorsMap[fe.Field()] = fmt.Sprintf(
-					"Field '%s' failed validation: tag='%s', param='%s'",
-					fe.Field(), fe.Tag(), fe.Param(),
-				)
-			}
-			c.JSON(400, gin.H{"errors": errorsMap})
-		} else {
-			c.JSON(400, gin.H{"error": err.Error()})
-		}
-		return
+	if !share.BindAndValidate(c, &dto) {
+		return // the function already handled the error response
 	}
 
 	err := h.service.Login(dto.Name, dto.Password)
