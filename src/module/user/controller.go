@@ -83,7 +83,6 @@ func (h *Handler) CreateUser(
 		Name:     dto.Name,
 		Email:    dto.Email,
 		Password: dto.Password,
-		Age:      uint(dto.Age), // safe conversion
 	}
 
 	// Error handle

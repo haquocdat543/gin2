@@ -1,8 +1,8 @@
 package db
 
 import (
-	"gorm.io/gorm"
 	"gin/src/module/user"
+	"gorm.io/gorm"
 )
 
 func Seed(db *gorm.DB) error {

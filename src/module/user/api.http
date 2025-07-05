@@ -8,7 +8,6 @@ POST http://localhost:8080/api/user
 	"name": "haquocdat",
 	"password": "12345678",
 	"email": "wwwdatha543@gmail.com",
-	"age": 20
 }
 
 ### DELETE api/user
