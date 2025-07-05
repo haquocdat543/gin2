@@ -2,19 +2,12 @@ package share
 
 import (
 	"net/http"
-	"time"
 
 	"github.com/gin-gonic/gin"
 
 	"github.com/ulule/limiter/v3"
 	"github.com/ulule/limiter/v3/drivers/store/memory"
 )
-
-// Define a GlobalRatelimit limit of 5 requests per minute for the specific API.
-var GlobalRatelimit = limiter.Rate{
-	Period: 20 * time.Second,
-	Limit:  20,
-}
 
 // RateLimitMiddleware creates a rate-limiting middleware for a specific rate.
 func RateLimitMiddleware(

@@ -2,6 +2,7 @@ package user
 
 import (
 	"gin/src/share"
+	"gin/src/config"
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
 	"net/http"
@@ -31,7 +32,7 @@ func (h *Handler) RegisterRoutes(
 			"POST",
 			"/",
 			share.LogRequest(logger),
-			share.RateLimitMiddleware(share.GlobalRatelimit),
+			share.RateLimitMiddleware(config.GlobalRatelimit),
 			h.CreateUser,
 		)
 
@@ -39,7 +40,7 @@ func (h *Handler) RegisterRoutes(
 			"DELETE",
 			"/",
 			share.LogRequest(logger),
-			share.RateLimitMiddleware(share.GlobalRatelimit),
+			share.RateLimitMiddleware(config.GlobalRatelimit),
 			h.DeleteUser,
 		)
 
@@ -47,7 +48,7 @@ func (h *Handler) RegisterRoutes(
 			"GET",
 			"/",
 			share.LogRequest(logger),
-			share.RateLimitMiddleware(share.GlobalRatelimit),
+			share.RateLimitMiddleware(config.GlobalRatelimit),
 			h.GetUsers,
 		)
 
@@ -55,7 +56,7 @@ func (h *Handler) RegisterRoutes(
 			"POST",
 			"/login",
 			share.LogRequest(logger),
-			share.RateLimitMiddleware(share.GlobalRatelimit),
+			share.RateLimitMiddleware(config.GlobalRatelimit),
 			h.Login,
 		)
 
@@ -63,7 +64,7 @@ func (h *Handler) RegisterRoutes(
 			"PATCH",
 			"/password",
 			share.LogRequest(logger),
-			share.RateLimitMiddleware(share.GlobalRatelimit),
+			share.RateLimitMiddleware(config.GlobalRatelimit),
 			h.UpdatePassword,
 		)
 
@@ -71,7 +72,7 @@ func (h *Handler) RegisterRoutes(
 			"PATCH",
 			"/",
 			share.LogRequest(logger),
-			share.RateLimitMiddleware(share.GlobalRatelimit),
+			share.RateLimitMiddleware(config.GlobalRatelimit),
 			share.AuthMiddleware(),
 			h.PatchUpdateUser,
 		)
@@ -80,7 +81,7 @@ func (h *Handler) RegisterRoutes(
 			"PUT",
 			"/",
 			share.LogRequest(logger),
-			share.RateLimitMiddleware(share.GlobalRatelimit),
+			share.RateLimitMiddleware(config.GlobalRatelimit),
 			share.AuthMiddleware(),
 			h.PutUpdateUser,
 		)

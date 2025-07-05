@@ -1,6 +1,7 @@
 package share
 
 import (
+	"gin/src/config"
 	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt/v5"
 	"net/http"
@@ -12,7 +13,7 @@ var jwtSecret = []byte("your_super_secret_key") // Use a strong, secure key
 func GenerateToken(username string) (string, error) {
 	claims := jwt.MapClaims{
 		"username": username,
-		"exp":      time.Now().Add(time.Hour * 24).Unix(), // Token expires in 24 hours
+		"exp":      time.Now().Add(config.GlobalJWTTimeToLive).Unix(), // Token expires in 24 hours
 	}
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 	return token.SignedString(jwtSecret)
@@ -68,7 +69,7 @@ func AuthMiddleware() gin.HandlerFunc {
 		c.Set(
 			"username",
 			claims["username"],
-			) // Store username in context
+		) // Store username in context
 		c.Next()
 	}
 }
