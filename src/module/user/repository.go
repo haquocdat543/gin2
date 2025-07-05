@@ -55,6 +55,7 @@ func (r *repository) Find(name string) (User, error) {
 
 	fields := []string{
 		"email",
+		"dob",
 		"role",
 		"address",
 	}
