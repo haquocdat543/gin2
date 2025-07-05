@@ -19,6 +19,11 @@ type Service interface {
 		name string,
 		passwors string,
 	) error
+
+	UpdateUserPassword(
+		name string,
+		newPassword string,
+	) error
 }
 
 type service struct {
@@ -65,4 +70,15 @@ func (s *service) Login(
 	}
 
 	return nil // login success
+}
+
+func (s *service) UpdateUserPassword(name string, newPassword string) error {
+
+	err := s.repo.UpdateUserPassword(name, newPassword)
+	if err != nil {
+		// Could be user not found
+		return fmt.Errorf("Update password failed: %w", err)
+	}
+
+	return nil
 }

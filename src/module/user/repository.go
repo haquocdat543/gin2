@@ -16,6 +16,10 @@ type Repository interface {
 		string,
 		error,
 	)
+
+	UpdateUserPassword(name string, newPassword string) (
+		error,
+	)
 }
 
 type repository struct {
@@ -56,4 +60,18 @@ func (r *repository) GetUserPassword(name string) (string, error) {
 		return "", err
 	}
 	return user.Password, nil
+}
+
+func (r *repository) UpdateUserPassword(name string, newPassword string) (error) {
+	var user User
+
+	err := r.db.First(&user, "name = ?", name).Error
+	if err != nil {
+		return err
+	}
+
+	user.Password = newPassword
+	r.db.Save(&user)
+
+	return nil
 }

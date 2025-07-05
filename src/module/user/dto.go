@@ -11,3 +11,9 @@ type LoginDTO struct {
 	Name     string `json:"name" binding:"required,min=3"`
 	Password string `json:"password" binding:"required,min=8,max=20"`
 }
+
+type UpdatePasswordDTO struct {
+	Name        string `json:"name" binding:"required,min=3"`
+	Password    string `json:"password" binding:"required,min=8,max=20"`
+	NewPassword string `json:"new_password" binding:"required,min=8,max=20"`
+}
