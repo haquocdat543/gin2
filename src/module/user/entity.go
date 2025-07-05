@@ -13,7 +13,9 @@ type User struct {
 	Name      string    `gorm:"uniqueIndex" json:"name"`
 	Password  string    `json:"password"`
 	Email     string    `gorm:"uniqueIndex" json:"email"`
-	Age       uint      `json:"age"`
+	Dob       *time.Time `json:"dob"`
+	Role      *string    `json:"role"`
+	Address   *string    `json:"address"`
 	CreatedAt time.Time
 	UpdatedAt time.Time
 	DeletedAt gorm.DeletedAt `gorm:"index"`
