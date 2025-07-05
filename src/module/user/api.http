@@ -11,6 +11,14 @@ POST http://localhost:8080/api/user
 	"age": 20
 }
 
+### DELETE api/user
+DELETE http://localhost:8080/api/user
+
+{
+	"name": "haquocdat",
+	"password": "12345678"
+}
+
 ### POST api/user/login
 POST http://localhost:8080/api/user/login
 
@@ -27,3 +35,4 @@ PATCH http://localhost:8080/api/user/password
 	"password": "12345678",
 	"new_password": "12345679"
 }
+

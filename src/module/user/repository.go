@@ -17,9 +17,9 @@ type Repository interface {
 		error,
 	)
 
-	UpdateUserPassword(name string, newPassword string) (
-		error,
-	)
+	UpdateUserPassword(name string, newPassword string) error
+
+	DeleteUser(name string) error
 }
 
 type repository struct {
@@ -62,7 +62,7 @@ func (r *repository) GetUserPassword(name string) (string, error) {
 	return user.Password, nil
 }
 
-func (r *repository) UpdateUserPassword(name string, newPassword string) (error) {
+func (r *repository) UpdateUserPassword(name string, newPassword string) error {
 	var user User
 
 	err := r.db.First(&user, "name = ?", name).Error
@@ -72,6 +72,17 @@ func (r *repository) UpdateUserPassword(name string, newPassword string) (error)
 
 	user.Password = newPassword
 	r.db.Save(&user)
+
+	return nil
+}
+
+func (r *repository) DeleteUser(name string) error {
+	var user User
+
+	err := r.db.Unscoped().Delete(&user, "name = ?", name).Error
+	if err != nil {
+		return err
+	}
 
 	return nil
 }

@@ -6,6 +6,7 @@ const (
 	MsgUserCreated  = "User created successfully"
 	MsgUserFetched  = "Users fetched successfully"
 	MsgLoginSuccess = "login successfully"
+	MsgDeleteSuccess = "delete user successfully"
 )
 
 const (
