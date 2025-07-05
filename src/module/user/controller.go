@@ -63,7 +63,7 @@ func (h *Handler) CreateUser(
 		return // the function already handled the error response
 	}
 
-	// Manually map DTO to Entity
+	// Convert DTO to Entity
 	user := User{
 		Name:     dto.Name,
 		Email:    dto.Email,
@@ -71,6 +71,7 @@ func (h *Handler) CreateUser(
 		Age:      uint(dto.Age), // safe conversion
 	}
 
+	// Error handle
 	err := h.service.CreateUser(&user)
 	if err != nil {
 		if strings.Contains(
@@ -98,6 +99,7 @@ func (h *Handler) CreateUser(
 		return
 	}
 
+	// Data return
 	c.JSON(
 		http.StatusCreated,
 		gin.H{
@@ -111,8 +113,8 @@ func (h *Handler) GetUsers(
 	c *gin.Context,
 ) {
 
+	// Error handle
 	users, err := h.service.GetAllUsers()
-
 	if err != nil {
 		c.JSON(
 			http.StatusInternalServerError,
@@ -122,6 +124,8 @@ func (h *Handler) GetUsers(
 		)
 		return
 	}
+
+	// Data return
 	c.JSON(
 		http.StatusOK,
 		users,
@@ -138,6 +142,7 @@ func (h *Handler) Login(
 		return // the function already handled the error response
 	}
 
+	// Error handle
 	err := h.service.Login(dto.Name, dto.Password)
 	if err != nil {
 		c.JSON(
@@ -159,6 +164,7 @@ func (h *Handler) Login(
 			return
 		}
 
+	// Data return
 		c.JSON(
 			http.StatusCreated,
 			gin.H{
