@@ -43,8 +43,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NTE3NzY2N
 {
 	"name": "haquocdat",
 	"dob": "2004-10-26",
-	"role": "Manager",
-	"address": "Central Vietnam"
+	"role": "Manager"
 }
 
 ### POST api/user
