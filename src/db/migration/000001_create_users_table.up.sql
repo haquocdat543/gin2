@@ -1,9 +1,11 @@
 CREATE TABLE "user" (
     id UUID PRIMARY KEY,
     name TEXT UNIQUE NOT NULL,
-    email TEXT UNIQUE NOT NULL,
     password TEXT NOT NULL,
-    age INTEGER NOT NULL,
+    email TEXT UNIQUE NOT NULL,
+    dob DATE,
+    role TEXT,
+    address TEXT,
     created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
     updated_at TIMESTAMPTZ NOT NULL DEFAULT now(),
     deleted_at TIMESTAMPTZ
