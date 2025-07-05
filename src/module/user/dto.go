@@ -21,3 +21,11 @@ type DeleteUserDTO struct {
 	Name     string `json:"name" binding:"required,min=3,max=20"`
 	Password string `json:"password" binding:"required,min=8,max=20"`
 }
+
+// Other
+type PatchUserDTO struct {
+	Name    string  `json:"name"`
+	Dob     *string `json:"dob"`
+	Role    *string `json:"role"`
+	Address *string `json:"address"`
+}

@@ -16,6 +16,8 @@ type Service interface {
 		error,
 	)
 
+	CheckUserExist(name string) bool
+
 	Login(
 		name string,
 		passwors string,
@@ -28,6 +30,10 @@ type Service interface {
 
 	DeleteUser(
 		name string,
+	) error
+
+	UpdateUser(
+		user *User,
 	) error
 }
 
@@ -56,6 +62,12 @@ func (s *service) GetAllUsers() (
 	error,
 ) {
 	return s.repo.FindAll()
+}
+
+func (s *service) CheckUserExist(name string) bool {
+
+	return s.repo.CheckUserExist(name)
+
 }
 
 func (s *service) Login(
@@ -99,6 +111,17 @@ func (s *service) UpdateUserPassword(name string, newPassword string) error {
 func (s *service) DeleteUser(name string) error {
 
 	err := s.repo.DeleteUser(name)
+	if err != nil {
+		// Could be user not found
+		return fmt.Errorf("Update password failed: %w", err)
+	}
+
+	return nil
+}
+
+func (s *service) UpdateUser(user *User) error {
+
+	err := s.repo.UpdateUser(user)
 	if err != nil {
 		// Could be user not found
 		return fmt.Errorf("Update password failed: %w", err)

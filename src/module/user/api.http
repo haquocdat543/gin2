@@ -7,7 +7,7 @@ POST http://localhost:8080/api/user
 {
 	"name": "haquocdat",
 	"password": "12345678",
-	"email": "wwwdatha543@gmail.com",
+	"email": "wwwdatha543@gmail.com"
 }
 
 ### DELETE api/user
@@ -33,5 +33,17 @@ PATCH http://localhost:8080/api/user/password
 	"name": "haquocdat",
 	"password": "12345678",
 	"new_password": "12345679"
+}
+
+### POST api/user
+PATCH http://localhost:8080/api/user
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NTE3NzY2NzAsInVzZXJuYW1lIjoiSmluemh1In0.oYIISTJDxhLwZHduQ9Gyl1NT9XZP7hOPZG-DIoaX_L4
+
+{
+	"name": "haquocdat",
+	"dob": "2004-10-26",
+	"role": "Manager",
+	"address": "Central Vietnam"
 }
 

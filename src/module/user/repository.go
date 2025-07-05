@@ -12,6 +12,8 @@ type Repository interface {
 		error,
 	)
 
+	CheckUserExist(name string) bool
+
 	GetUserPassword(name string) (
 		string,
 		error,
@@ -20,6 +22,8 @@ type Repository interface {
 	UpdateUserPassword(name string, newPassword string) error
 
 	DeleteUser(name string) error
+
+	UpdateUser(user *User) error
 }
 
 type repository struct {
@@ -53,6 +57,15 @@ func (r *repository) FindAll() (
 	return users, err
 }
 
+func (r *repository) CheckUserExist(name string) bool {
+	var user User
+	err := r.db.First(&user, "name = ?", name).Error
+	if err != nil {
+		return false
+	}
+	return true
+}
+
 func (r *repository) GetUserPassword(name string) (string, error) {
 	var user User
 	err := r.db.First(&user, "name = ?", name).Error
@@ -80,6 +93,22 @@ func (r *repository) DeleteUser(name string) error {
 	var user User
 
 	err := r.db.Unscoped().Delete(&user, "name = ?", name).Error
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (r *repository) UpdateUser(user *User) error {
+
+	var existUser User
+
+	err := r.
+		db.
+		Model(&existUser).
+		Where("name = ?", user.Name).
+		Updates(user).Error
 	if err != nil {
 		return err
 	}
