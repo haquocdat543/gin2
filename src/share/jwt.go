@@ -1,6 +1,7 @@
 package share
 
 import (
+	"errors"
 	"gin/src/config"
 	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt/v5"
@@ -72,4 +73,20 @@ func AuthMiddleware() gin.HandlerFunc {
 		) // Store username in context
 		c.Next()
 	}
+}
+
+// GetUsername extracts the "username" claim from the Gin context.
+// This assumes your AuthMiddleware has already stored it.
+func GetUsername(c *gin.Context) (string, error) {
+	value, exists := c.Get("username")
+	if !exists {
+		return "", errors.New("username not found in context")
+	}
+
+	username, ok := value.(string)
+	if !ok || username == "" {
+		return "", errors.New("username in context is invalid")
+	}
+
+	return username, nil
 }

@@ -38,7 +38,7 @@ func (h *Handler) RegisterRoutes(
 
 		userGroup.Handle(
 			"GET",
-			"/:name",
+			"/",
 			share.LogRequest(logger),
 			share.RateLimitMiddleware(config.GlobalRatelimit),
 			share.AuthMiddleware(),
@@ -154,13 +154,14 @@ func (h *Handler) CreateUser(
 func (h *Handler) Find(
 	c *gin.Context,
 ) {
-	var dto GetUserInfoDTO
 
-	if !share.BindUriAndValidate(c, &dto) {
-		return // the function already handled the error response
+	username, err := share.GetUsername(c)
+	if err != nil {
+		c.JSON(500, gin.H{"error": err.Error()})
+		return
 	}
 
-	user, err := h.service.Find(dto.Name)
+	user, err := h.service.Find(username)
 	if err != nil {
 		c.JSON(
 			http.StatusBadRequest,
