@@ -46,7 +46,6 @@ Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NTE3NzY2NzAsInVzZXJuYW1lIjoiSmluemh1In0.oYIISTJDxhLwZHduQ9Gyl1NT9XZP7hOPZG-DIoaX_L4
 
 {
-	"name": "haquocdat",
 	"dob": "2004-10-26",
 	"role": "Director"
 }
@@ -57,7 +56,6 @@ Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NTE3NzY2NzAsInVzZXJuYW1lIjoiSmluemh1In0.oYIISTJDxhLwZHduQ9Gyl1NT9XZP7hOPZG-DIoaX_L4
 
 {
-	"name": "haquocdat",
 	"dob": "2004-11-26",
 	"role": "Manager",
 	"address": "South Vietnam"

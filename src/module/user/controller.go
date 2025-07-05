@@ -355,9 +355,15 @@ func (h *Handler) PatchUpdateUser(
 		return // the function already handled the error response
 	}
 
+	username, err := share.GetUsername(c)
+	if err != nil {
+		c.JSON(500, gin.H{"error": err.Error()})
+		return
+	}
+
 	user := User{}
 
-	user.Name = dto.Name
+	user.Name = username
 
 	if dto.Dob != nil {
 		user.Dob = share.ParseDate(*dto.Dob)
@@ -371,7 +377,7 @@ func (h *Handler) PatchUpdateUser(
 		user.Address = dto.Address
 	}
 
-	err := h.service.UpdateUser(&user)
+	err = h.service.UpdateUser(&user)
 	if err != nil {
 		c.JSON(
 			http.StatusBadRequest,
@@ -401,14 +407,20 @@ func (h *Handler) PutUpdateUser(
 		return // the function already handled the error response
 	}
 
+	username, err := share.GetUsername(c)
+	if err != nil {
+		c.JSON(500, gin.H{"error": err.Error()})
+		return
+	}
+
 	user := User{}
 
-	user.Name = dto.Name
+	user.Name = username
 	user.Dob = share.ParseDate(dto.Dob)
 	user.Role = &dto.Role
 	user.Address = &dto.Address
 
-	err := h.service.UpdateUser(&user)
+	err = h.service.UpdateUser(&user)
 	if err != nil {
 		c.JSON(
 			http.StatusBadRequest,
