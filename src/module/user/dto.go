@@ -29,3 +29,10 @@ type PatchUserDTO struct {
 	Role    *string `json:"role"`
 	Address *string `json:"address"`
 }
+
+type PutUserDTO struct {
+	Name    string `json:"name" binding:"required"`
+	Dob     string `json:"dob" binding:"required"`
+	Role    string `json:"role" binding:"required"`
+	Address string `json:"address" binding:"required"`
+}

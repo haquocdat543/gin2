@@ -73,9 +73,17 @@ func (h *Handler) RegisterRoutes(
 			share.LogRequest(logger),
 			share.RateLimitMiddleware(share.GlobalRatelimit),
 			share.AuthMiddleware(),
-			h.PatchUser,
+			h.PatchUpdateUser,
 		)
 
+		userGroup.Handle(
+			"PUT",
+			"/",
+			share.LogRequest(logger),
+			share.RateLimitMiddleware(share.GlobalRatelimit),
+			share.AuthMiddleware(),
+			h.PutUpdateUser,
+		)
 	}
 }
 
@@ -297,7 +305,7 @@ func (h *Handler) DeleteUser(
 
 }
 
-func (h *Handler) PatchUser(
+func (h *Handler) PatchUpdateUser(
 	c *gin.Context,
 ) {
 	var dto PatchUserDTO
@@ -322,6 +330,43 @@ func (h *Handler) PatchUser(
 	if dto.Address != nil {
 		user.Address = dto.Address
 	}
+
+	err := h.service.UpdateUser(&user)
+	if err != nil {
+		c.JSON(
+			http.StatusBadRequest,
+			gin.H{
+				"error": err.Error(),
+			},
+		)
+	}
+
+	// Data return
+	c.JSON(
+		http.StatusOK,
+		gin.H{
+			"message": MsgUpdateUserSuccess,
+		},
+	)
+
+}
+
+func (h *Handler) PutUpdateUser(
+	c *gin.Context,
+) {
+	var dto PutUserDTO
+
+	// Bind JSON to DTO and validate
+	if !share.BindAndValidate(c, &dto) {
+		return // the function already handled the error response
+	}
+
+	user := User{}
+
+	user.Name = dto.Name
+	user.Dob = share.ParseDate(dto.Dob)
+	user.Role = &dto.Role
+	user.Address = &dto.Address
 
 	err := h.service.UpdateUser(&user)
 	if err != nil {
