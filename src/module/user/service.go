@@ -3,6 +3,7 @@ package user
 import (
 	"fmt"
 	"golang.org/x/crypto/bcrypt"
+	"strings"
 )
 
 type Service interface {
@@ -59,8 +60,16 @@ func (s *service) Login(
 ) error {
 	hashedPassword, err := s.repo.GetUserPassword(name)
 	if err != nil {
-		// Could be user not found
-		return fmt.Errorf("authentication failed: %w", err)
+
+		if strings.Contains(
+			err.Error(),
+			"record not found",
+		) {
+
+			// Could be user not found
+			return fmt.Errorf("User Not Found")
+
+		}
 	}
 
 	err = bcrypt.CompareHashAndPassword([]byte(hashedPassword), []byte(plainPassword))
