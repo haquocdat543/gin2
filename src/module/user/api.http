@@ -13,7 +13,7 @@ POST http://localhost:8080/api/user
 ### GET api/user
 GET http://localhost:8080/api/user
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NTE3NzY2NzAsInVzZXJuYW1lIjoiSmluemh1In0.oYIISTJDxhLwZHduQ9Gyl1NT9XZP7hOPZG-DIoaX_L4
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NTE4MDYzNTAsImlhdCI6MTc1MTcxOTk1MCwiaXAiOiI6OjEiLCJ1c2VybmFtZSI6ImhhcXVvY2RhdCJ9.NyPXsJajJuG9_2KORadJRb_oJNI8OLjI1nQXxTXOWnU
 
 ### DELETE api/user
 DELETE http://localhost:8080/api/user
@@ -36,14 +36,14 @@ PATCH http://localhost:8080/api/user/password
 
 {
 	"name": "haquocdat",
-	"password": "12345678",
-	"new_password": "12345679"
+	"password": "12345679",
+	"new_password": "12345678"
 }
 
 ### POST api/user
 PATCH http://localhost:8080/api/user
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NTE3NzY2NzAsInVzZXJuYW1lIjoiSmluemh1In0.oYIISTJDxhLwZHduQ9Gyl1NT9XZP7hOPZG-DIoaX_L4
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NTE4MDYzNTAsImlhdCI6MTc1MTcxOTk1MCwiaXAiOiI6OjEiLCJ1c2VybmFtZSI6ImhhcXVvY2RhdCJ9.NyPXsJajJuG9_2KORadJRb_oJNI8OLjI1nQXxTXOWnU
 
 {
 	"dob": "2004-10-26",
@@ -53,11 +53,10 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NTE3NzY2N
 ### POST api/user
 PUT http://localhost:8080/api/user
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NTE3NzY2NzAsInVzZXJuYW1lIjoiSmluemh1In0.oYIISTJDxhLwZHduQ9Gyl1NT9XZP7hOPZG-DIoaX_L4
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NTE4MDYzNTAsImlhdCI6MTc1MTcxOTk1MCwiaXAiOiI6OjEiLCJ1c2VybmFtZSI6ImhhcXVvY2RhdCJ9.NyPXsJajJuG9_2KORadJRb_oJNI8OLjI1nQXxTXOWnU
 
 {
 	"dob": "2004-11-26",
 	"role": "Manager",
 	"address": "South Vietnam"
 }
-

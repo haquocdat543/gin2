@@ -11,10 +11,12 @@ import (
 
 var jwtSecret = []byte("your_super_secret_key") // Use a strong, secure key
 
-func GenerateToken(username string) (string, error) {
+func GenerateToken(username string, ip string) (string, error) {
 	claims := jwt.MapClaims{
 		"username": username,
+		"ip":       ip,
 		"exp":      time.Now().Add(config.GlobalJWTTimeToLive).Unix(), // Token expires in 24 hours
+		"iat":      time.Now().Unix(),
 	}
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 	return token.SignedString(jwtSecret)
@@ -24,12 +26,7 @@ func AuthMiddleware() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		tokenString := c.GetHeader("Authorization")
 		if tokenString == "" {
-			c.JSON(
-				http.StatusUnauthorized,
-				gin.H{
-					"error": "Authorization header required",
-				},
-			)
+			c.JSON(http.StatusUnauthorized, gin.H{"error": "Authorization header required"})
 			c.Abort()
 			return
 		}
@@ -39,38 +36,42 @@ func AuthMiddleware() gin.HandlerFunc {
 			tokenString = tokenString[7:]
 		}
 
-		token, err := jwt.Parse(
-			tokenString,
-			func(token *jwt.Token) (any, error) {
-				return jwtSecret, nil
-			},
-		)
+		token, err := jwt.Parse(tokenString, func(token *jwt.Token) (any, error) {
+			if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
+				return nil, errors.New("unexpected signing method")
+			}
+			return jwtSecret, nil
+		})
 
 		if err != nil || !token.Valid {
-			c.JSON(
-				http.StatusUnauthorized,
-				gin.H{
-					"error": "Invalid token",
-				},
-			)
+			c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid token"})
 			c.Abort()
 			return
 		}
 
 		claims, ok := token.Claims.(jwt.MapClaims)
 		if !ok {
-			c.JSON(http.StatusUnauthorized, gin.H{
-				"error": "Invalid token claims",
-			},
-			)
+			c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid token claims"})
 			c.Abort()
 			return
 		}
 
-		c.Set(
-			"username",
-			claims["username"],
-		) // Store username in context
+		username, ok := claims["username"].(string)
+		if !ok || username == "" {
+			c.JSON(http.StatusUnauthorized, gin.H{"error": "Username missing in token"})
+			c.Abort()
+			return
+		}
+
+		// IP binding check
+		tokenIP, ok := claims["ip"].(string)
+		if !ok || tokenIP != c.ClientIP() {
+			c.JSON(http.StatusUnauthorized, gin.H{"error": "IP address mismatch — possible token misuse"})
+			c.Abort()
+			return
+		}
+
+		c.Set("username", username)
 		c.Next()
 	}
 }

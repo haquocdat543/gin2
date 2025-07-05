@@ -225,7 +225,7 @@ func (h *Handler) Login(
 		)
 	} else {
 
-		token, err := share.GenerateToken(dto.Name)
+		token, err := share.GenerateToken(dto.Name, c.ClientIP())
 		if err != nil {
 			c.JSON(
 				http.StatusInternalServerError,
@@ -269,7 +269,7 @@ func (h *Handler) UpdatePassword(
 		)
 	} else {
 
-		token, err := share.GenerateToken(dto.Name)
+		token, err := share.GenerateToken(dto.Name, c.ClientIP())
 		if err != nil {
 			c.JSON(
 				http.StatusInternalServerError,
