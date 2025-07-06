@@ -92,6 +92,15 @@ func (h *Handler) RegisterRoutes(
 			share.AuthMiddleware(),
 			h.PutUpdateUser,
 		)
+
+		userGroup.Handle(
+			"PATCH",
+			"/delete",
+			share.LogRequest(logger),
+			share.RateLimitMiddleware(config.GlobalRatelimit),
+			share.AuthMiddleware(),
+			h.PatchDeleteUser,
+		)
+
 	}
 }
-

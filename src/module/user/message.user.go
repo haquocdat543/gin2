@@ -9,6 +9,7 @@ const (
 	MsgLoginSuccess      = "login successfully"
 	MsgDeleteSuccess     = "delete user successfully"
 	MsgUpdateUserSuccess = "update user successfully"
+	MsgPatchDeleteUserSuccess  = "patch delete user successfully"
 )
 
 const (

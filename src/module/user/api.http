@@ -17,7 +17,7 @@ POST {{SCHEME}}://{{HOST}}:{{PORT}}/api/user
 ### GET api/user
 GET {{SCHEME}}://{{HOST}}:{{PORT}}/api/user
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NTE4MDYzNTAsImlhdCI6MTc1MTcxOTk1MCwiaXAiOiI6OjEiLCJ1c2VybmFtZSI6ImhhcXVvY2RhdCJ9.NyPXsJajJuG9_2KORadJRb_oJNI8OLjI1nQXxTXOWnU
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NTE4OTMyNzUsImlhdCI6MTc1MTgwNjg3NSwiaXAiOiI6OjEiLCJ1c2VybmFtZSI6ImhhcXVvY2RhdCJ9.qtLTv0vZqYYc9WTASWGzGOgVhuVs6nEtU_da3hLDYrA
 
 ### DELETE api/user
 DELETE {{SCHEME}}://{{HOST}}:{{PORT}}/api/user
@@ -47,7 +47,7 @@ PATCH {{SCHEME}}://{{HOST}}:{{PORT}}/api/user/password
 ### POST api/user
 PATCH {{SCHEME}}://{{HOST}}:{{PORT}}/api/user
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NTE4MDYzNTAsImlhdCI6MTc1MTcxOTk1MCwiaXAiOiI6OjEiLCJ1c2VybmFtZSI6ImhhcXVvY2RhdCJ9.NyPXsJajJuG9_2KORadJRb_oJNI8OLjI1nQXxTXOWnU
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NTE4OTMyNzUsImlhdCI6MTc1MTgwNjg3NSwiaXAiOiI6OjEiLCJ1c2VybmFtZSI6ImhhcXVvY2RhdCJ9.qtLTv0vZqYYc9WTASWGzGOgVhuVs6nEtU_da3hLDYrA
 
 {
 	"dob": "2004-10-26",
@@ -57,10 +57,21 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NTE4MDYzN
 ### POST api/user
 PUT {{SCHEME}}://{{HOST}}:{{PORT}}/api/user
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NTE4MDYzNTAsImlhdCI6MTc1MTcxOTk1MCwiaXAiOiI6OjEiLCJ1c2VybmFtZSI6ImhhcXVvY2RhdCJ9.NyPXsJajJuG9_2KORadJRb_oJNI8OLjI1nQXxTXOWnU
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NTE4OTMyNzUsImlhdCI6MTc1MTgwNjg3NSwiaXAiOiI6OjEiLCJ1c2VybmFtZSI6ImhhcXVvY2RhdCJ9.qtLTv0vZqYYc9WTASWGzGOgVhuVs6nEtU_da3hLDYrA
 
 {
 	"dob": "2004-11-26",
 	"role": "Manager",
 	"address": "South Vietnam"
+}
+
+### POST api/user/delete
+PATCH {{SCHEME}}://{{HOST}}:{{PORT}}/api/user/delete
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NTE4OTMyNzUsImlhdCI6MTc1MTgwNjg3NSwiaXAiOiI6OjEiLCJ1c2VybmFtZSI6ImhhcXVvY2RhdCJ9.qtLTv0vZqYYc9WTASWGzGOgVhuVs6nEtU_da3hLDYrA
+
+{
+	"dob": true,
+	"role": true,
+	"address": true
 }

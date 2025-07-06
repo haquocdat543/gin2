@@ -34,3 +34,9 @@ type PutUserDTO struct {
 	Role    string `json:"role" binding:"required"`
 	Address string `json:"address" binding:"required"`
 }
+
+type PatchDeleteDTO struct {
+	Dob     *bool `json:"dob"`
+	Role    *bool `json:"role"`
+	Address *bool `json:"address"`
+}

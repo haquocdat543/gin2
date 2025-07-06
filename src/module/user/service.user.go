@@ -22,6 +22,8 @@ type Service interface {
 	DeleteUser(name string) error
 
 	UpdateUser(user *User) error
+
+	PatchDeleteUser(user *User, fields map[string]interface{}) error
 }
 
 type service struct {
@@ -116,6 +118,17 @@ func (s *service) UpdateUser(user *User) error {
 	if err != nil {
 		// Could be user not found
 		return fmt.Errorf("Update password failed: %w", err)
+	}
+
+	return nil
+}
+
+func (s *service) PatchDeleteUser(user *User, fields map[string]interface{}) error {
+
+	err := s.repo.PatchDeleteUser(user, fields)
+	if err != nil {
+		// Could be user not found
+		return fmt.Errorf("Patch delete failed: %w", err)
 	}
 
 	return nil

@@ -27,6 +27,8 @@ type Repository interface {
 	DeleteUser(name string) error
 
 	UpdateUser(user *User) error
+
+	PatchDeleteUser(user *User, fields map[string]interface{}) error
 }
 
 type repository struct {
@@ -119,6 +121,22 @@ func (r *repository) UpdateUser(user *User) error {
 		Model(&existUser).
 		Where("name = ?", user.Name).
 		Updates(user).Error
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (r *repository) PatchDeleteUser(user *User, fields map[string]interface{}) error {
+
+	var existUser User
+
+	err := r.
+		db.
+		Model(&existUser).
+		Where("name = ?", user.Name).
+		Updates(fields).Error
 	if err != nil {
 		return err
 	}
