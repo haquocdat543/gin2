@@ -7,36 +7,21 @@ import (
 )
 
 type Service interface {
-	CreateUser(
-		user *User,
-	) error
+	CreateUser(user *User) error
 
-	Find(name string) (User,error)
+	Find(name string) (User, error)
 
-	GetAllUsers() (
-		[]User,
-		error,
-	)
+	GetAllUsers() ([]User, error)
 
 	CheckUserExist(name string) bool
 
-	Login(
-		name string,
-		passwors string,
-	) error
+	Login(name string, passwors string) error
 
-	UpdateUserPassword(
-		name string,
-		newPassword string,
-	) error
+	UpdateUserPassword(name string, newPassword string) error
 
-	DeleteUser(
-		name string,
-	) error
+	DeleteUser(name string) error
 
-	UpdateUser(
-		user *User,
-	) error
+	UpdateUser(user *User) error
 }
 
 type service struct {

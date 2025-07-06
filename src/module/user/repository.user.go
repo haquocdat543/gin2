@@ -5,23 +5,15 @@ import (
 )
 
 type Repository interface {
-	Create(
-		user *User,
-	) error
+	Create(user *User) error
 
 	Find(name string) (User, error)
 
-	FindAll() (
-		[]User,
-		error,
-	)
+	FindAll() ([]User, error)
 
 	CheckUserExist(name string) bool
 
-	GetUserPassword(name string) (
-		string,
-		error,
-	)
+	GetUserPassword(name string) (string, error)
 
 	UpdateUserPassword(name string, newPassword string) error
 
