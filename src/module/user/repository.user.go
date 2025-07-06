@@ -4,12 +4,19 @@ import (
 	"gorm.io/gorm"
 )
 
+var fields = []string{
+	"email",
+	"dob",
+	"role",
+	"address",
+}
+
 type Repository interface {
 	Create(user *User) error
 
-	Find(name string) (User, error)
+	GetUser(name string) (User, error)
 
-	FindAll() ([]User, error)
+	GetUsers() ([]User, error)
 
 	CheckUserExist(name string) bool
 
@@ -42,26 +49,19 @@ func (r *repository) Create(
 	).Error
 }
 
-func (r *repository) Find(name string) (User, error) {
+func (r *repository) GetUser(name string) (User, error) {
 	var user User
-
-	fields := []string{
-		"email",
-		"dob",
-		"role",
-		"address",
-	}
 
 	err := r.db.Select(fields).Where("name = ?", name).Find(&user).Error
 	return user, err
 }
 
-func (r *repository) FindAll() (
+func (r *repository) GetUsers() (
 	[]User,
 	error,
 ) {
 	var users []User
-	err := r.db.Find(
+	err := r.db.Select(fields).Find(
 		&users,
 	).Error
 	return users, err

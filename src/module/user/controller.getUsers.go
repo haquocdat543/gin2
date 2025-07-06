@@ -10,7 +10,7 @@ func (h *Handler) GetUsers(
 ) {
 
 	// Error handle
-	users, err := h.service.GetAllUsers()
+	users, err := h.service.GetUsers()
 	if err != nil {
 		c.JSON(
 			http.StatusInternalServerError,

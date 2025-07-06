@@ -6,7 +6,7 @@ import (
 	"net/http"
 )
 
-func (h *Handler) Find(
+func (h *Handler) GetUser(
 	c *gin.Context,
 ) {
 
@@ -16,7 +16,7 @@ func (h *Handler) Find(
 		return
 	}
 
-	user, err := h.service.Find(username)
+	user, err := h.service.GetUser(username)
 	if err != nil {
 		c.JSON(
 			http.StatusBadRequest,

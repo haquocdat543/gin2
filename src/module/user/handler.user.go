@@ -40,7 +40,7 @@ func (h *Handler) RegisterRoutes(
 			share.LogRequest(logger),
 			share.RateLimitMiddleware(config.GlobalRatelimit),
 			share.AuthMiddleware(),
-			h.Find,
+			h.GetUser,
 		)
 
 		userGroup.Handle(

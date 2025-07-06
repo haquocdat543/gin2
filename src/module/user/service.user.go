@@ -9,9 +9,9 @@ import (
 type Service interface {
 	CreateUser(user *User) error
 
-	Find(name string) (User, error)
+	GetUser(name string) (User, error)
 
-	GetAllUsers() ([]User, error)
+	GetUsers() ([]User, error)
 
 	CheckUserExist(name string) bool
 
@@ -44,15 +44,15 @@ func (s *service) CreateUser(
 	)
 }
 
-func (s *service) Find(name string) (User, error) {
-	return s.repo.Find(name)
+func (s *service) GetUser(name string) (User, error) {
+	return s.repo.GetUser(name)
 }
 
-func (s *service) GetAllUsers() (
+func (s *service) GetUsers() (
 	[]User,
 	error,
 ) {
-	return s.repo.FindAll()
+	return s.repo.GetUsers()
 }
 
 func (s *service) CheckUserExist(name string) bool {
