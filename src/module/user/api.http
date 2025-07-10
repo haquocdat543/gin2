@@ -1,12 +1,11 @@
-@SCHEME = http
-@HOST = localhost
-@PORT = 8080
+@DOMAIN = http://localhost:8080
+@TOKEN = Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NTIyMDQwODQsImlhdCI6MTc1MjExNzY4NCwiaXAiOiI6OjEiLCJ1c2VybmFtZSI6ImhhcXVvY2RhdCJ9.T6wehuss8gCEI74XWhoefEG4hNAWoo4Md4c8guABVUk
 
 ### GET api/user/all
-GET {{SCHEME}}://{{HOST}}:{{PORT}}/api/user/all
+GET {{DOMAIN}}/api/user/all
 
 ### POST api/user
-POST {{SCHEME}}://{{HOST}}:{{PORT}}/api/user
+POST {{DOMAIN}}/api/user
 
 {
 	"name": "haquocdat",
@@ -15,12 +14,12 @@ POST {{SCHEME}}://{{HOST}}:{{PORT}}/api/user
 }
 
 ### GET api/user
-GET {{SCHEME}}://{{HOST}}:{{PORT}}/api/user
+GET {{DOMAIN}}/api/user
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NTE4OTMyNzUsImlhdCI6MTc1MTgwNjg3NSwiaXAiOiI6OjEiLCJ1c2VybmFtZSI6ImhhcXVvY2RhdCJ9.qtLTv0vZqYYc9WTASWGzGOgVhuVs6nEtU_da3hLDYrA
+Authorization: {{TOKEN}}
 
 ### DELETE api/user
-DELETE {{SCHEME}}://{{HOST}}:{{PORT}}/api/user
+DELETE {{DOMAIN}}/api/user
 
 {
 	"name": "haquocdat",
@@ -28,7 +27,7 @@ DELETE {{SCHEME}}://{{HOST}}:{{PORT}}/api/user
 }
 
 ### POST api/user/login
-POST {{SCHEME}}://{{HOST}}:{{PORT}}/api/user/login
+POST {{DOMAIN}}/api/user/login
 
 {
 	"name": "haquocdat",
@@ -36,7 +35,16 @@ POST {{SCHEME}}://{{HOST}}:{{PORT}}/api/user/login
 }
 
 ### POST api/user/password
-PATCH {{SCHEME}}://{{HOST}}:{{PORT}}/api/user/password
+PATCH {{DOMAIN}}/api/user/password
+
+{
+	"name": "haquocdat",
+	"password": "12345678",
+	"new_password": "12345679"
+}
+
+### POST api/user/password
+PATCH {{DOMAIN}}/api/user/password
 
 {
 	"name": "haquocdat",
@@ -45,9 +53,9 @@ PATCH {{SCHEME}}://{{HOST}}:{{PORT}}/api/user/password
 }
 
 ### POST api/user
-PATCH {{SCHEME}}://{{HOST}}:{{PORT}}/api/user
+PATCH {{DOMAIN}}/api/user
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NTE4OTMyNzUsImlhdCI6MTc1MTgwNjg3NSwiaXAiOiI6OjEiLCJ1c2VybmFtZSI6ImhhcXVvY2RhdCJ9.qtLTv0vZqYYc9WTASWGzGOgVhuVs6nEtU_da3hLDYrA
+Authorization: {{TOKEN}}
 
 {
 	"dob": "2004-10-26",
@@ -55,9 +63,9 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NTE4OTMyN
 }
 
 ### POST api/user
-PUT {{SCHEME}}://{{HOST}}:{{PORT}}/api/user
+PUT {{DOMAIN}}/api/user
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NTE4OTMyNzUsImlhdCI6MTc1MTgwNjg3NSwiaXAiOiI6OjEiLCJ1c2VybmFtZSI6ImhhcXVvY2RhdCJ9.qtLTv0vZqYYc9WTASWGzGOgVhuVs6nEtU_da3hLDYrA
+Authorization: {{TOKEN}}
 
 {
 	"dob": "2004-11-26",
@@ -66,9 +74,9 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NTE4OTMyN
 }
 
 ### POST api/user/delete
-PATCH {{SCHEME}}://{{HOST}}:{{PORT}}/api/user/delete
+PATCH {{DOMAIN}}/api/user/delete
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NTE4OTMyNzUsImlhdCI6MTc1MTgwNjg3NSwiaXAiOiI6OjEiLCJ1c2VybmFtZSI6ImhhcXVvY2RhdCJ9.qtLTv0vZqYYc9WTASWGzGOgVhuVs6nEtU_da3hLDYrA
+Authorization: {{TOKEN}}
 
 {
 	"dob": true,
