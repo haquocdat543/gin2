@@ -23,7 +23,7 @@ type Service interface {
 
 	UpdateUser(user *User) error
 
-	PatchDeleteUser(user *User, fields map[string]interface{}) error
+	PatchDeleteUser(user *User, fields map[string]any) error
 }
 
 type service struct {
@@ -123,7 +123,7 @@ func (s *service) UpdateUser(user *User) error {
 	return nil
 }
 
-func (s *service) PatchDeleteUser(user *User, fields map[string]interface{}) error {
+func (s *service) PatchDeleteUser(user *User, fields map[string]any) error {
 
 	err := s.repo.PatchDeleteUser(user, fields)
 	if err != nil {

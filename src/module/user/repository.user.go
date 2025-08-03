@@ -28,7 +28,7 @@ type Repository interface {
 
 	UpdateUser(user *User) error
 
-	PatchDeleteUser(user *User, fields map[string]interface{}) error
+	PatchDeleteUser(user *User, fields map[string]any) error
 }
 
 type repository struct {
@@ -128,7 +128,7 @@ func (r *repository) UpdateUser(user *User) error {
 	return nil
 }
 
-func (r *repository) PatchDeleteUser(user *User, fields map[string]interface{}) error {
+func (r *repository) PatchDeleteUser(user *User, fields map[string]any) error {
 
 	var existUser User
 
