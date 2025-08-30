@@ -28,6 +28,18 @@ func LoadPrivateKey(privateKey string) (*rsa.PrivateKey, error) {
 	return key.(*rsa.PrivateKey), nil
 }
 
+func LoadPublicKey(publicKey string) (*rsa.PublicKey, error) {
+	block, _ := pem.Decode([]byte(publicKey))
+	if block == nil {
+		return nil, fmt.Errorf("failed to parse PEM block")
+	}
+	key, err := x509.ParsePKIXPublicKey(block.Bytes)
+	if err != nil {
+		return nil, err
+	}
+	return key.(*rsa.PublicKey), nil
+}
+
 func GenerateToken(username string, ip string) (string, error) {
 	claims := jwt.MapClaims{
 		"username": username,
