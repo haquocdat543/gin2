@@ -34,6 +34,9 @@ POST {{DOMAIN}}/api/user/login
 	"password": "12345678"
 }
 
+### GET api/user/.well-known/jwks.json
+GET {{DOMAIN}}/api/user/.well-known/jwks.json
+
 ### POST api/user/password
 PATCH {{DOMAIN}}/api/user/password
 
