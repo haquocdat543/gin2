@@ -37,3 +37,9 @@ private:
 	openssl genpkey -algorithm RSA -out private.pem -pkeyopt rsa_keygen_bits:2048
 public:
 	openssl rsa -in private.pem -pubout -out public.pem
+update-env-key: private public
+	sed -i '' -E "s|^JWT_PRIVATE_KEY_BASE64_ENCODED=[^ ]*|JWT_PRIVATE_KEY_BASE64_ENCODED=$$(cat private.pem | base64)|" .env
+	sed -i '' -E "s|^JWT_PUBLIC_KEY_BASE64_ENCODED=[^ ]*|JWT_PUBLIC_KEY_BASE64_ENCODED=$$(cat public.pem | base64)|" .env
+	rm private.pem
+	rm public.pem
+
