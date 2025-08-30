@@ -1,5 +1,5 @@
 @DOMAIN = http://localhost:8080
-@TOKEN = Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NTIyMDQwODQsImlhdCI6MTc1MjExNzY4NCwiaXAiOiI6OjEiLCJ1c2VybmFtZSI6ImhhcXVvY2RhdCJ9.T6wehuss8gCEI74XWhoefEG4hNAWoo4Md4c8guABVUk
+@TOKEN = Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NTY2MTY5NzIsImlhdCI6MTc1NjUzMDU3MiwiaXAiOiI6OjEiLCJ1c2VybmFtZSI6ImhhcXVvY2RhdCJ9.GWE08gki7hulVUgqCDHP3a7xRIrgF-WLOJBgOmmxaLzZP0O-Bf4KZb8--u6YlWWjSJ9SppgTFbdLXodZfU0qdE5RU-F2x67L5YfkonCCrT5zlruZvbOXfictX5epgDA-zdtTH215lH-MRQhpE6S01sq6w0RUr7QTd_Z71cnuDBGsDf-RUEyAwq4a1plev4mz17h4IrG36zO1v4f8TW7unGMLB_s4bCiF6mvFA87yylQh9DYJ_BLR0aLPzC3QHX0mIpyAoE-xMW2CT3_uV7blFkv3Yeg-Vgdu3F_lmKPmStIJ2sR54QLoyzcz-XYPTvqxuXs-rxtMPIdhBTX_ybKHNg
 
 ### GET api/user/all
 GET {{DOMAIN}}/api/user/all
@@ -33,6 +33,11 @@ POST {{DOMAIN}}/api/user/login
 	"name": "haquocdat",
 	"password": "12345678"
 }
+
+### GET api/user/validate
+GET {{DOMAIN}}/api/user/validate
+Content-Type: application/json
+Authorization: {{TOKEN}}
 
 ### GET api/user/.well-known/jwks.json
 GET {{DOMAIN}}/api/user/.well-known/jwks.json

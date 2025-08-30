@@ -61,6 +61,14 @@ func (h *Handler) RegisterRoutes(
 
 		userGroup.Handle(
 			"GET",
+			"/validate",
+			share.LogRequest(logger),
+			share.AuthMiddleware(),
+			h.Validate,
+		)
+
+		userGroup.Handle(
+			"GET",
 			"/.well-known/jwks.json",
 			share.LogRequest(logger),
 			h.JWK,
