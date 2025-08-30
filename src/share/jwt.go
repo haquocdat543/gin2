@@ -12,6 +12,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt/v5"
+	"github.com/lestrrat-go/jwx/v2/jwk"
 )
 
 var jwtSecret = []byte("your_super_secret_key") // Use a strong, secure key
@@ -38,6 +39,26 @@ func LoadPublicKey(publicKey string) (*rsa.PublicKey, error) {
 		return nil, err
 	}
 	return key.(*rsa.PublicKey), nil
+}
+
+func CreateJWKSet() jwk.Set {
+
+	publicKey, err := LoadPublicKey(config.ENV.JWTPublicKey)
+	if err != nil {
+		panic(config.LOAD_JWT_PUBLIC_KEY_ERROR)
+	}
+
+	jwkKey, err := jwk.FromRaw(publicKey)
+	if err != nil {
+		panic(err)
+	}
+
+	jwkKey.Set(jwk.KeyIDKey, "my-key-id")
+
+	jwkSet := jwk.NewSet()
+	jwkSet.AddKey(jwkKey)
+
+	return jwkSet
 }
 
 func GenerateToken(username string, ip string) (string, error) {
