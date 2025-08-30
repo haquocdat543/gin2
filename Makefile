@@ -31,3 +31,9 @@ mdown:
 # Seeding
 seed-start:
 	go run main.go seed start
+
+# KeyGenerate
+private:
+	openssl genpkey -algorithm RSA -out private.pem -pkeyopt rsa_keygen_bits:2048
+public:
+	openssl rsa -in private.pem -pubout -out public.pem
