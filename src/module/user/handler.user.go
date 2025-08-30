@@ -60,6 +60,13 @@ func (h *Handler) RegisterRoutes(
 		)
 
 		userGroup.Handle(
+			"GET",
+			"/.well-known/jwks.json",
+			share.LogRequest(logger),
+			h.JWK,
+		)
+
+		userGroup.Handle(
 			"POST",
 			"/login",
 			share.LogRequest(logger),
