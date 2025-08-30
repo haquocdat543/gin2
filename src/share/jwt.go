@@ -74,7 +74,7 @@ func GenerateToken(username string, ip string) (string, error) {
 		panic(config.LOAD_JWT_PRIVATE_KEY_ERROR)
 	}
 
-	return jwt.NewWithClaims(jwt.SigningMethodHS256, claims).SignedString(privateKey)
+	return jwt.NewWithClaims(jwt.SigningMethodRS256, claims).SignedString(privateKey)
 }
 
 func AuthMiddleware() gin.HandlerFunc {
@@ -91,11 +91,16 @@ func AuthMiddleware() gin.HandlerFunc {
 			tokenString = tokenString[7:]
 		}
 
+		publicKey, err := LoadPublicKey(config.ENV.JWTPublicKey)
+		if err != nil {
+			panic(config.LOAD_JWT_PUBLIC_KEY_ERROR)
+		}
+
 		token, err := jwt.Parse(tokenString, func(token *jwt.Token) (any, error) {
-			if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
+			if _, ok := token.Method.(*jwt.SigningMethodRSA); !ok {
 				return nil, errors.New("unexpected signing method")
 			}
-			return jwtSecret, nil
+			return publicKey, nil
 		})
 
 		if err != nil || !token.Valid {
