@@ -1,15 +1,32 @@
 package share
 
 import (
+	"crypto/rsa"
+	"crypto/x509"
+	"encoding/pem"
 	"errors"
+	"fmt"
 	"gin/src/config"
-	"github.com/gin-gonic/gin"
-	"github.com/golang-jwt/jwt/v5"
 	"net/http"
 	"time"
+
+	"github.com/gin-gonic/gin"
+	"github.com/golang-jwt/jwt/v5"
 )
 
 var jwtSecret = []byte("your_super_secret_key") // Use a strong, secure key
+
+func LoadPrivateKey(privateKey string) (*rsa.PrivateKey, error) {
+	block, _ := pem.Decode([]byte(privateKey))
+	if block == nil {
+		return nil, fmt.Errorf("failed to parse PEM block")
+	}
+	key, err := x509.ParsePKCS8PrivateKey(block.Bytes)
+	if err != nil {
+		return nil, err
+	}
+	return key.(*rsa.PrivateKey), nil
+}
 
 func GenerateToken(username string, ip string) (string, error) {
 	claims := jwt.MapClaims{
@@ -18,8 +35,13 @@ func GenerateToken(username string, ip string) (string, error) {
 		"exp":      time.Now().Add(config.GlobalJWTTimeToLive).Unix(), // Token expires in 24 hours
 		"iat":      time.Now().Unix(),
 	}
-	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
-	return token.SignedString(jwtSecret)
+
+	privateKey, err := LoadPrivateKey(config.ENV.JWTPrivateKey)
+	if err != nil {
+		panic(config.LOAD_JWT_PRIVATE_KEY_ERROR)
+	}
+
+	return jwt.NewWithClaims(jwt.SigningMethodHS256, claims).SignedString(privateKey)
 }
 
 func AuthMiddleware() gin.HandlerFunc {
