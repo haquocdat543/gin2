@@ -1,15 +1,15 @@
 package user
 
 import (
-	"gin/src/share"
+	"gin/pkg/share"
 	"github.com/gin-gonic/gin"
 	"net/http"
 )
 
-func (h *Handler) DeleteUser(
+func (h *Handler) Login(
 	c *gin.Context,
 ) {
-	var dto DeleteUserDTO
+	var dto LoginDTO
 
 	// Bind JSON to DTO and validate
 	if !share.BindJSONAndValidate(c, &dto) {
@@ -27,21 +27,23 @@ func (h *Handler) DeleteUser(
 		)
 	} else {
 
-		err := h.service.DeleteUser(dto.Name)
+		token, err := share.GenerateToken(dto.Name, c.ClientIP())
 		if err != nil {
 			c.JSON(
 				http.StatusInternalServerError,
 				gin.H{
-					"error": "Failed to update password",
+					"error": "Could not generate token",
 				},
 			)
+			return
 		}
 
 		// Data return
 		c.JSON(
 			http.StatusCreated,
 			gin.H{
-				"message": MsgDeleteSuccess,
+				"message": MsgLoginSuccess,
+				"jwt":     token,
 			},
 		)
 	}

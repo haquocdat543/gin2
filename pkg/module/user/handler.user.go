@@ -1,8 +1,8 @@
 package user
 
 import (
-	"gin/src/config"
-	"gin/src/share"
+	"gin/pkg/config"
+	"gin/pkg/share"
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
 )

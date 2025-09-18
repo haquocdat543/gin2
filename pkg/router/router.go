@@ -1,7 +1,7 @@
 package router
 
 import (
-	"gin/src/module/user"
+	"gin/pkg/module/user"
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
 	"go.uber.org/zap"

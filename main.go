@@ -1,10 +1,10 @@
 package main
 
 import (
-	"gin/src/cli"
-	"gin/src/config"
-	"gin/src/db"
-	"gin/src/router"
+	"gin/pkg/cli"
+	"gin/pkg/config"
+	"gin/pkg/db"
+	"gin/pkg/router"
 )
 
 func main() {

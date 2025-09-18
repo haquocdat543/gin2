@@ -1,7 +1,7 @@
 package db
 
 import (
-	"gin/src/module/user"
+	"gin/pkg/module/user"
 	"gorm.io/gorm"
 )
 

@@ -6,7 +6,7 @@ import (
 	"encoding/pem"
 	"errors"
 	"fmt"
-	"gin/src/config"
+	"gin/pkg/config"
 	"net/http"
 	"time"
 

@@ -1,7 +1,7 @@
 package user
 
 import (
-	"gin/src/share"
+	"gin/pkg/share"
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"strings"

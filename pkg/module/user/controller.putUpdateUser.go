@@ -1,15 +1,15 @@
 package user
 
 import (
-	"gin/src/share"
+	"gin/pkg/share"
 	"github.com/gin-gonic/gin"
 	"net/http"
 )
 
-func (h *Handler) PatchUpdateUser(
+func (h *Handler) PutUpdateUser(
 	c *gin.Context,
 ) {
-	var dto PatchUserDTO
+	var dto PutUserDTO
 
 	// Bind JSON to DTO and validate
 	if !share.BindJSONAndValidate(c, &dto) {
@@ -25,18 +25,9 @@ func (h *Handler) PatchUpdateUser(
 	user := User{}
 
 	user.Name = username
-
-	if dto.Dob != nil {
-		user.Dob = share.ParseDate(*dto.Dob)
-	}
-
-	if dto.Role != nil {
-		user.Role = dto.Role
-	}
-
-	if dto.Address != nil {
-		user.Address = dto.Address
-	}
+	user.Dob = share.ParseDate(dto.Dob)
+	user.Role = &dto.Role
+	user.Address = &dto.Address
 
 	err = h.service.UpdateUser(&user)
 	if err != nil {
@@ -57,4 +48,3 @@ func (h *Handler) PatchUpdateUser(
 	)
 
 }
-

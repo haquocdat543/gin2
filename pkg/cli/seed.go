@@ -1,8 +1,8 @@
 package cli
 
 import (
-	"gin/src/config"
-	"gin/src/db"
+	"gin/pkg/config"
+	"gin/pkg/db"
 	"github.com/spf13/cobra"
 )
 
