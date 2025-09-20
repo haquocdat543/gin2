@@ -15,8 +15,6 @@ import (
 	"github.com/lestrrat-go/jwx/v2/jwk"
 )
 
-var jwtSecret = []byte("your_super_secret_key") // Use a strong, secure key
-
 func LoadPrivateKey(privateKey string) (*rsa.PrivateKey, error) {
 	block, _ := pem.Decode([]byte(privateKey))
 	if block == nil {
@@ -53,10 +51,16 @@ func CreateJWKSet() jwk.Set {
 		panic(err)
 	}
 
-	jwkKey.Set(jwk.KeyIDKey, "my-key-id")
+	setKeyError := jwkKey.Set(jwk.KeyIDKey, "my-key-id")
+	if setKeyError != nil {
+		panic(setKeyError)
+	}
 
 	jwkSet := jwk.NewSet()
-	jwkSet.AddKey(jwkKey)
+	addKeyError := jwkSet.AddKey(jwkKey)
+	if addKeyError != nil {
+		panic(addKeyError)
+	}
 
 	return jwkSet
 }
