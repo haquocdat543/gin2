@@ -5,6 +5,7 @@ import (
 	"gin/pkg/config"
 	"gin/pkg/db"
 	"gin/pkg/router"
+	"log"
 )
 
 func main() {
@@ -31,6 +32,10 @@ func main() {
 		dbConn,
 		logger,
 	)
-	r.Run(":8080")
+
+	ginRunError := r.Run(":8080")
+	if ginRunError != nil {
+		log.Fatal(ginRunError)
+	}
 
 }

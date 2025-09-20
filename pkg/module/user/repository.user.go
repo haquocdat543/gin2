@@ -72,10 +72,7 @@ func (r *repository) GetUsers() (
 func (r *repository) CheckUserExist(name string) bool {
 	var user User
 	err := r.db.First(&user, "name = ?", name).Error
-	if err != nil {
-		return false
-	}
-	return true
+	return err == nil
 }
 
 func (r *repository) GetUserPassword(name string) (string, error) {

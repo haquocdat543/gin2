@@ -20,7 +20,10 @@ var seedStartCmd = &cobra.Command{
 		cmd *cobra.Command,
 		args []string,
 	) {
-		db.Seed(config.InitDB())
+		seedError := db.Seed(config.InitDB())
+		if seedError != nil {
+			panic(seedError)
+		}
 	},
 }
 
