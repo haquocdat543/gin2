@@ -1,3 +1,10 @@
+DB_USER=$(shell cat .env | grep DB_USER | cut -d= -f 2 | sed "s|\"||g")
+DB_PASSWORD=$(shell cat .env | grep DB_PASSWORD | cut -d= -f 2 | sed "s|\"||g")
+DB_HOST=$(shell cat .env | grep DB_HOST | cut -d= -f 2 | sed "s|\"||g")
+DB_PORT=$(shell cat .env | grep DB_PORT | cut -d= -f 2 | sed "s|\"||g")
+
+DB_URL="postgres://$(DB_USER):$(DB_PASSWORD)@$(DB_HOST):$(DB_PORT)/postgres?sslmode=disable"
+
 i-ginkgo:
 	go install github.com/onsi/ginkgo/v2/ginkgo@latest
 	go get github.com/onsi/gomega
@@ -20,13 +27,13 @@ ginkgo-w:
 m-gen:
 	migrate create -ext sql -dir src/db/migration -seq create_users_table
 mv:
-	migrate -path src/db/migration -database "postgres://develop:effimatebackend@localhost:5432/postgres?sslmode=disable" version
+	migrate -path pkg/db/migration -database $(DB_URL) version
 mf:
-	migrate -path src/db/migration -database "postgres://develop:effimatebackend@localhost:5432/postgres?sslmode=disable" force 1
+	migrate -path pkg/db/migration -database $(DB_URL) force 1
 mup:
-	migrate -path src/db/migration -database "postgres://develop:effimatebackend@localhost:5432/postgres?sslmode=disable" up 1
+	migrate -path pkg/db/migration -database $(DB_URL) up 1
 mdown:
-	migrate -path src/db/migration -database "postgres://develop:effimatebackend@localhost:5432/postgres?sslmode=disable" down 1
+	migrate -path pkg/db/migration -database $(DB_URL) down 1
 
 # Seeding
 seed-start:
