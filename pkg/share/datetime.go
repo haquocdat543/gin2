@@ -11,4 +11,3 @@ func ParseDate(dateStr string) *time.Time {
 	}
 	return &t
 }
-

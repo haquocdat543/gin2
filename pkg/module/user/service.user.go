@@ -76,7 +76,7 @@ func (s *service) Login(
 		) {
 
 			// Could be user not found
-			return fmt.Errorf("User Not Found")
+			return fmt.Errorf("user Not Found")
 
 		}
 	}
@@ -84,7 +84,7 @@ func (s *service) Login(
 	err = bcrypt.CompareHashAndPassword([]byte(hashedPassword), []byte(plainPassword))
 	if err != nil {
 		// Don't leak if it's a bad password or a hash mismatch
-		return fmt.Errorf(ErrInvalidPassword)
+		return fmt.Errorf("%s", ErrInvalidPassword)
 	}
 
 	return nil // login success
@@ -95,7 +95,7 @@ func (s *service) UpdateUserPassword(name string, newPassword string) error {
 	err := s.repo.UpdateUserPassword(name, newPassword)
 	if err != nil {
 		// Could be user not found
-		return fmt.Errorf("Update password failed: %w", err)
+		return fmt.Errorf("update password failed: %w", err)
 	}
 
 	return nil
@@ -106,7 +106,7 @@ func (s *service) DeleteUser(name string) error {
 	err := s.repo.DeleteUser(name)
 	if err != nil {
 		// Could be user not found
-		return fmt.Errorf("Update password failed: %w", err)
+		return fmt.Errorf("update password failed: %w", err)
 	}
 
 	return nil
@@ -117,7 +117,7 @@ func (s *service) UpdateUser(user *User) error {
 	err := s.repo.UpdateUser(user)
 	if err != nil {
 		// Could be user not found
-		return fmt.Errorf("Update password failed: %w", err)
+		return fmt.Errorf("update password failed: %w", err)
 	}
 
 	return nil
@@ -128,7 +128,7 @@ func (s *service) PatchDeleteUser(user *User, fields map[string]any) error {
 	err := s.repo.PatchDeleteUser(user, fields)
 	if err != nil {
 		// Could be user not found
-		return fmt.Errorf("Patch delete failed: %w", err)
+		return fmt.Errorf("patch delete failed: %w", err)
 	}
 
 	return nil
