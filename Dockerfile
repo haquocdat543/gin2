@@ -15,17 +15,14 @@ COPY . .
 RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -ldflags "-s -w" -o app ./cmd/app/main.go 
 
 # Use a minimal base image for the final container
-FROM alpine:latest  
-
-# Set the working directory inside the container
-WORKDIR /usr/local/bin
+FROM scratch
 
 # Copy the compiled binary from the build stage
-COPY --from=build /app/app .
+COPY --from=build /app/app /
 
 # Expose the application's port (change according to your app)
 EXPOSE 8080
 
 # Command to run the application
-CMD ["app"]
+CMD ["/app"]
 
