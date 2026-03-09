@@ -4,6 +4,9 @@ FROM golang:1.24 AS build
 # Set the working directory inside the container
 WORKDIR /app
 
+RUN apt update -y && apt install -y \
+	upx
+
 # Copy the Go module files first and download dependencies
 COPY go.mod go.sum ./
 RUN go mod download
@@ -12,7 +15,7 @@ RUN go mod download
 COPY . .
 
 # Build the application
-RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -ldflags "-s -w" -o app ./cmd/app/main.go 
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -ldflags "-s -w" -o app ./cmd/app/main.go && upx --ultra-brute --lzma /app/app
 
 # Use a minimal base image for the final container
 FROM scratch
